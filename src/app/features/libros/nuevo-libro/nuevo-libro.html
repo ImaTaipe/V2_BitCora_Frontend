@@ -1,0 +1,35 @@
+<div class="container mt-4">
+
+  <h2>Nuevo Libro</h2>
+
+  <form (ngSubmit)="guardar()">
+
+    <input class="form-control mb-2" placeholder="Título" [(ngModel)]="libro.titulo" name="titulo">
+
+    <input class="form-control mb-2" placeholder="Autor" [(ngModel)]="libro.autor" name="autor">
+
+    <input class="form-control mb-2" placeholder="Editorial" [(ngModel)]="libro.editorial" name="editorial">
+
+    <textarea class="form-control mb-2" placeholder="Sinopsis" [(ngModel)]="libro.sinopsis" name="sinopsis"></textarea>
+
+    <input class="form-control mb-2" placeholder="ISBN" [(ngModel)]="libro.isbn" name="isbn">
+
+    <input type="number" class="form-control mb-2" placeholder="Año" [(ngModel)]="libro.anio" name="anio">
+
+    <input type="number" class="form-control mb-2" placeholder="Stock" [(ngModel)]="libro.stock" name="stock">
+
+    <input type="file" class="form-control mb-2" (change)="onFileChange($event)">
+
+    <div class="d-flex gap-2">
+        <button type="button" class="btn btn-secondary w-50" routerLink="/libros">
+            ❌ Cancelar
+        </button>
+        <button type="submit" class="btn btn-success w-50">
+            Guardar
+        </button>
+
+    </div>
+
+  </form>
+
+</div>

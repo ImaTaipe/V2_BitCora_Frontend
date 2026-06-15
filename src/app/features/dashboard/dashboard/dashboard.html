@@ -1,0 +1,129 @@
+<div class="container mt-4">
+  <h2>Dashboard BitCoraPerú</h2>
+  <hr>
+  <div class="mb-3">
+
+  <a
+    routerLink="/libros"
+    class="btn btn-primary"
+  >
+    Catálogo de Libros
+  </a>
+
+  
+
+</div>
+  @if(rol() === 'Administrador') {
+    <div class="row">
+      <div class="col-md-3 mb-3">
+        <div class="card p-3">
+          <h6>Total Libros</h6>
+          <h2>{{ admin()?.totalLibros }}</h2>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div class="card p-3">
+          <h6>Total Usuarios</h6>
+          <h2>{{ admin()?.totalUsuarios }}</h2>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div class="card p-3">
+          <h6>Préstamos Activos</h6>
+          <h2>{{ admin()?.prestamosActivos }}</h2>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div class="card p-3">
+          <h6>Multas Recaudadas</h6>
+          <h2>S/ {{ admin()?.multasRecaudadas }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Libros Más Solicitados
+          </div>
+          <div class="card-body">
+            <ul class="list-group">
+              @for(
+                libro of admin()?.topLibros;
+                track libro
+              ) {
+                <li class="list-group-item">
+                  {{ libro }}
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Usuarios con Sanciones
+          </div>
+          <div class="card-body">
+            <ul class="list-group">
+              @for(
+                usuario of admin()?.usuariosSancionados;
+                track usuario
+              ) {
+                <li class="list-group-item">
+                  {{ usuario }}
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+  @if(rol() === 'Bibliotecario') {
+    <div class="row">
+      <div class="col-md-3 mb-3">
+        <div class="card p-3">
+          <h6>Stock Total</h6>
+          <h2>{{ bibliotecario()?.stockTotal }}</h2>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div class="card p-3">
+          <h6>Préstamos Hoy</h6>
+          <h2>{{ bibliotecario()?.prestamosHoy }}</h2>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div class="card p-3">
+          <h6>Devoluciones Pendientes</h6>
+          <h2>{{ bibliotecario()?.devolucionesPendientes }}</h2>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div class="card p-3">
+          <h6>Multas Pendientes</h6>
+          <h2>{{ bibliotecario()?.multasPendientes }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        Libros Más Solicitados
+      </div>
+      <div class="card-body">
+        <ul class="list-group">
+          @for(
+            libro of bibliotecario()?.topLibros;
+            track libro
+          ) {
+            <li class="list-group-item">
+              {{ libro }}
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  }
+</div>
