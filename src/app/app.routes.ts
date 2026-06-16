@@ -7,6 +7,8 @@ import { Catalogo } from './features/libros/catalogo/catalogo';
 import { NuevoLibro } from './features/libros/nuevo-libro/nuevo-libro';
 import { EditarLibro } from './features/libros/editar-libro/editar-libro';
 import { adminGuard } from './core/guards/admin-guard';
+import { NuevoPrestamo } from './features/prestamos/nuevo-prestamo/nuevo-prestamo';
+import { ListaPrestamos } from './features/prestamos/lista-prestamos/lista-prestamos';
 
 export const routes: Routes = [
     {
@@ -43,6 +45,18 @@ export const routes: Routes = [
     component: EditarLibro,
     canActivate: [authGuard, adminGuard]
   },
+
+  {
+  path: 'prestamos',
+  component: ListaPrestamos,
+  canActivate: [authGuard]
+},
+
+{
+  path: 'prestamos/nuevo',
+  component: NuevoPrestamo,
+  canActivate: [authGuard]
+},
 
   {
     path: '**',

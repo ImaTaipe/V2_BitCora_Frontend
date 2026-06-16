@@ -1,0 +1,79 @@
+<div class="container mt-4">
+  <h2>
+    Nuevo Préstamo
+  </h2>
+  <form
+    (ngSubmit)="guardar()">
+    <div class="mb-3">
+      <label>
+        Usuario
+      </label>
+      <select
+        class="form-select"
+        [(ngModel)]="usuarioId"
+        name="usuarioId">
+        <option
+          [ngValue]="0">
+          Seleccione...
+        </option>
+        @for (
+          usuario of usuarios();
+          track usuario.id
+        ) {
+          <option
+            [ngValue]="usuario.id">
+            {{ usuario.nombreCompleto }}
+          </option>
+        }
+      </select>
+    </div>
+    <div class="mb-3">
+      <label>
+        Libro
+      </label>
+      <select
+        class="form-select"
+        [(ngModel)]="libroId"
+        name="libroId">
+        <option
+          [ngValue]="0">
+          Seleccione...
+        </option>
+        @for (
+          libro of libros();
+          track libro.id
+        ) {
+          <option
+            [ngValue]="libro.id">
+            {{ libro.titulo }}
+            (Stock:
+            {{ libro.stock }})
+          </option>
+        }
+      </select>
+      <div class="mb-3">
+  <label>
+    Tiempo de préstamo
+  </label>
+  <select
+    class="form-select"
+    [(ngModel)]="diasPrestamo"
+    name="diasPrestamo">
+    <option [ngValue]="7">
+      7 días
+    </option>
+    <option [ngValue]="14">
+      14 días
+    </option>
+    <option [ngValue]="21">
+      21 días
+    </option>
+  </select>
+</div>
+    </div>
+    <button
+      class="btn btn-success">
+      Registrar Préstamo
+    </button>
+  </form>
+</div>

@@ -83,6 +83,16 @@ export class Auth {
     );
   }
 
+  puedeGestionarPrestamos(): boolean {
+
+  return (
+    this.getRol() === 'Administrador'
+    ||
+    this.getRol() === 'Bibliotecario'
+  );
+
+}
+
   getToken() {
     return localStorage.getItem(
       'token'
@@ -98,7 +108,5 @@ esAdministrador(): boolean {
 
 esBibliotecario(): boolean {
   return this.getRol() === 'Bibliotecario';
-}
-  
-  
+} 
 }

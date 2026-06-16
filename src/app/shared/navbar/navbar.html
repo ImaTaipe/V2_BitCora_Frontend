@@ -1,39 +1,45 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-
-  <div class="container">
-
-    <a class="navbar-brand">
+  <div class="container-fluid">
+    <a
+      class="navbar-brand"
+      routerLink="/dashboard">
       BitCoraPerú
     </a>
-
-    <div>
-
+    <div class="navbar-nav">
       <a
-        routerLink="/dashboard"
-        class="btn btn-outline-light me-2">
-
+        class="nav-link"
+        routerLink="/dashboard">
         Dashboard
-
       </a>
-
       <a
-        routerLink="/libros"
-        class="btn btn-outline-light me-2">
-
-        Catálogo
-
+        class="nav-link"
+        routerLink="/libros">
+        Libros
       </a>
-
-      <button
-        class="btn btn-danger"
-        (click)="logout()">
-
-        Salir
-
-      </button>
-
+      @if (auth.puedeGestionarPrestamos()) {
+        <a
+          class="nav-link"
+          routerLink="/prestamos">
+          Préstamos
+        </a>
+      }
+      @if (auth.esAdministrador()) {
+        <a
+          class="nav-link"
+          routerLink="/usuarios">
+          Usuarios
+        </a>
+      }
     </div>
-
+    <div class="d-flex align-items-center text-white">
+      <span class="me-3">
+        {{ auth.getRol() }}
+      </span>
+      <button
+        class="btn btn-outline-light btn-sm"
+        (click)="logout()">
+        Salir
+      </button>
+    </div>
   </div>
-
 </nav>

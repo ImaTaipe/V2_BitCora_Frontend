@@ -97,6 +97,14 @@ editarLibro(id: number, data: any) {
   );
 }
 
+getAll() {
+
+  return this.http.get<Libro[]>(
+    this.apiUrl
+  );
+
+}
+
 eliminarLibro(id: number) {
   return this.http.delete(`${this.apiUrl}/${id}`);
 }
