@@ -1,7 +1,14 @@
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>Multas</h2>
-    <button class="btn btn-primary" routerLink="/multas/nueva">Nueva Multa</button>
+    <div class="d-flex gap-2">
+      <button class="btn btn-danger" (click)="generarPdf()">
+        📄 Exportar PDF
+      </button>
+      <button class="btn btn-primary" routerLink="/multas/nueva">
+        Nueva Multa
+      </button>
+    </div>
   </div>
 
   <div class="row g-3 mb-4">
@@ -19,7 +26,7 @@
     </div>
   </div>
 
-  <table class="table table-bordered table-striped">
+  <table class="table table-bordered table-striped shadow-sm">
     <thead>
       <tr>
         <th>Usuario</th>
@@ -51,6 +58,12 @@
             @if (auth.esAdministrador()) {
               <button class="btn btn-danger btn-sm" (click)="eliminar(multa.id)">Eliminar</button>
             }
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="7" class="text-center text-muted py-3">
+            No se encontraron multas registradas bajo este criterio de búsqueda.
           </td>
         </tr>
       }

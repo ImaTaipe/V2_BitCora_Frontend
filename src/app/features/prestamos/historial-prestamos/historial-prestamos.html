@@ -1,0 +1,98 @@
+<div class="container mt-4">
+
+  <h2 class="mb-4">📋 Historial de Préstamos</h2>
+
+  <div class="row mb-4 align-items-end">
+
+    <div class="col-md-3">
+      <label class="form-label fw-bold text-secondary">Buscar</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Usuario o libro..."
+        [ngModel]="filtro()"
+        (ngModelChange)="filtro.set($event)">
+    </div>
+
+    <div class="col-md-2">
+      <label class="form-label fw-bold text-secondary">Desde</label>
+      <input
+        type="date"
+        class="form-control"
+        [ngModel]="desde()"
+        (ngModelChange)="desde.set($event)">
+    </div>
+
+    <div class="col-md-2">
+      <label class="form-label fw-bold text-secondary">Hasta</label>
+      <input
+        type="date"
+        class="form-control"
+        [ngModel]="hasta()"
+        (ngModelChange)="hasta.set($event)">
+    </div>
+
+    <div class="col-md-2">
+      <label class="form-label fw-bold text-secondary">Estado</label>
+      <select
+        class="form-select"
+        [ngModel]="estado()"
+        (ngModelChange)="estado.set($event)">
+        <option value="">Todos</option>
+        <option value="Entregado">Entregado</option>
+        <option value="Devuelto">Devuelto</option>
+      </select>
+    </div>
+
+    <div class="col-md-3 d-grid">
+      <button class="btn btn-danger" (click)="generarPdf()">
+        📄 Exportar PDF Filtrado
+      </button>
+    </div>
+
+  </div>
+
+  <table class="table table-striped table-bordered shadow-sm">
+    <thead>
+      <tr>
+        <th>Usuario</th>
+        <th>Libro</th>
+        <th>Préstamo</th>
+        <th>Devolución Máxima</th>
+        <th>Entrega Real</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (p of prestamosFiltrados(); track p.id) {
+        <tr>
+          <td>{{ p.usuario }}</td>
+          <td>{{ p.libro }}</td>
+          <td>{{ p.fechaPrestamo | date:'dd/MM/yyyy' }}</td>
+          <td>{{ p.fechaDevolucionMaxima | date:'dd/MM/yyyy' }}</td>
+          <td>
+            @if (p.fechaEntregaReal) {
+              {{ p.fechaEntregaReal | date:'dd/MM/yyyy' }}
+            } @else {
+              <span class="text-muted">-</span>
+            }
+          </td>
+          <td>
+            <span class="badge"
+                  [class.bg-success]="p.estado === 'Devuelto'"
+                  [class.bg-warning]="p.estado === 'Entregado'">
+              {{ p.estado }}
+            </span>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="6" class="text-center text-muted py-3">
+            No se encontraron registros con los filtros seleccionados.
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+</div>

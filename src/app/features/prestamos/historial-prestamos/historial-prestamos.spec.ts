@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LibroForm } from './libro-form';
+import { HistorialPrestamos } from './historial-prestamos';
 
-describe('LibroForm', () => {
-  let component: LibroForm;
-  let fixture: ComponentFixture<LibroForm>;
+describe('HistorialPrestamos', () => {
+  let component: HistorialPrestamos;
+  let fixture: ComponentFixture<HistorialPrestamos>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LibroForm],
+      imports: [HistorialPrestamos],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LibroForm);
+    fixture = TestBed.createComponent(HistorialPrestamos);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

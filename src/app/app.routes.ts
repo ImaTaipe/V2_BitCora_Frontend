@@ -14,6 +14,8 @@ import { NuevoUsuario } from './features/usuarios/nuevo-usuario/nuevo-usuario';
 import { EditarUsuario } from './features/usuarios/editar-usuario/editar-usuario';
 import { ListaMultas } from './features/multas/lista-multas/lista-multas';
 import { NuevaMulta } from './features/multas/nueva-multa/nueva-multa';
+import { HistorialPrestamos } from './features/prestamos/historial-prestamos/historial-prestamos';
+
 
 
 export const routes: Routes = [
@@ -44,55 +46,61 @@ export const routes: Routes = [
   path: 'libros/nuevo',
   component: NuevoLibro,
   canActivate: [authGuard, adminGuard]
-},
+  },
 
-  {
-    path: 'libros/editar/:id',
-    component: EditarLibro,
-    canActivate: [authGuard, adminGuard]
+    {
+      path: 'libros/editar/:id',
+      component: EditarLibro,
+      canActivate: [authGuard, adminGuard]
+    },
+
+    {
+    path: 'prestamos',
+    component: ListaPrestamos,
+    canActivate: [authGuard]
   },
 
   {
-  path: 'prestamos',
-  component: ListaPrestamos,
-  canActivate: [authGuard]
-},
+    path: 'prestamos/nuevo',
+    component: NuevoPrestamo,
+    canActivate: [authGuard]
+  },
 
-{
-  path: 'prestamos/nuevo',
-  component: NuevoPrestamo,
-  canActivate: [authGuard]
-},
+  {
+    path: 'usuarios',
+    component: ListaUsuarios,
+    canActivate: [authGuard]
+  },
 
-{
-  path: 'usuarios',
-  component: ListaUsuarios,
-  canActivate: [authGuard]
-},
+  {
+    path: 'usuarios/nuevo',
+    component: NuevoUsuario,
+    canActivate: [authGuard]
+  },
 
-{
-  path: 'usuarios/nuevo',
-  component: NuevoUsuario,
-  canActivate: [authGuard]
-},
+  {
+    path: 'usuarios/editar/:id',
+    component: EditarUsuario,
+    canActivate: [authGuard]
+  },
 
-{
-  path: 'usuarios/editar/:id',
-  component: EditarUsuario,
-  canActivate: [authGuard]
-},
+  {
+    path: 'multas',
+    component: ListaMultas,
+    canActivate: [authGuard]
+  },
 
-{
-  path: 'multas',
-  component: ListaMultas,
-  canActivate: [authGuard]
-},
+  {
+    path: 'multas/nueva',
+    component: NuevaMulta,
+    canActivate: [authGuard]
+  },
 
-{
-  path: 'multas/nueva',
-  component: NuevaMulta,
-  canActivate: [authGuard]
-},
+  {
+    path: 'prestamos/historial',
+    component: HistorialPrestamos,
+    canActivate: [authGuard]
+  },
 
   {
     path: '**',

@@ -4,86 +4,67 @@
 
   <hr>
 
-  <!-- BUSCADOR -->
   <input
     class="form-control mb-4"
     placeholder="Buscar por título o autor..."
     [ngModel]="filtro()"
     (ngModelChange)="filtro.set($event)"
   >
-  @if (authService.esAdministrador()) {
+  
+  <div class="d-flex gap-2 mb-3">
+    @if (authService.esAdministrador()) {
+      <button
+        class="btn btn-primary"
+        routerLink="/libros/nuevo">
+        + Nuevo Libro
+      </button>
+    } 
 
-  <button
-    class="btn btn-primary mb-3"
-    routerLink="/libros/nuevo">
+    <button
+      class="btn btn-danger"
+      (click)="generarPdf()">
+      📄 Exportar PDF
+    </button>
+  </div>
 
-    + Nuevo Libro
-
-  </button>
-
-}
-
-  <!-- LIBROS -->
   <div class="row">
-
     @for (libro of librosFiltrados(); track libro.id) {
-
       <div class="col-md-3 mb-4">
-
         <div class="card h-100 shadow-sm">
-
           <img
             [src]="obtenerImagen(libro.urlImagen)"
             class="card-img-top"
             style="height: 280px; object-fit: cover;"
           >
-
           <div class="card-body">
-
             <h5 class="card-title">
               {{ libro.titulo }}
             </h5>
-
             <p class="card-text">
               <strong>Autor:</strong> {{ libro.autor }}
             </p>
-
             <p class="card-text">
               <strong>Stock:</strong> {{ libro.stock }}
             </p>
 
             @if (authService.esAdministrador()) {
-
-  <button
-    class="btn btn-warning btn-sm mt-2"
-    [routerLink]="['/libros/editar', libro.id]">
-
-    Editar
-
-  </button>
-
-}
-           @if (authService.esAdministrador()) {
-
-  <button
-    class="btn btn-danger btn-sm mt-2 ms-2"
-    (click)="eliminar(libro.id)">
-
-    Eliminar
-
-  </button>
-
-}
-
-
+              <button
+                class="btn btn-warning btn-sm mt-2"
+                [routerLink]="['/libros/editar', libro.id]">
+                Editar
+              </button>
+            }
+            @if (authService.esAdministrador()) {
+              <button
+                class="btn btn-danger btn-sm mt-2 ms-2"
+                (click)="eliminar(libro.id)">
+                Eliminar
+              </button>
+            }
           </div>
-
         </div>
-
       </div>
-
     }
-
   </div>
 
 </div>

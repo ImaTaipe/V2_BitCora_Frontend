@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LibrosService } from '../../../core/services/libros';
-import { Router } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 
 @Component({
   selector: 'app-nuevo-libro',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink], 
   templateUrl: './nuevo-libro.html',
   styleUrl: './nuevo-libro.css',
 })
@@ -24,7 +24,6 @@ export class NuevoLibro {
   };
 
   imagen: File | null = null;
-
   constructor(
     private librosService: LibrosService,
     private router: Router

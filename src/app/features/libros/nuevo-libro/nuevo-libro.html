@@ -1,35 +1,96 @@
-<div class="container mt-4">
+<div class="container mt-4 d-flex justify-content-center">
+  <div class="card p-4 shadow-sm" style="width: 100%; max-width: 550px;">
+    <h3 class="text-center mb-4">📚 Registrar Nuevo Libro</h3>
 
-  <h2>Nuevo Libro</h2>
+    <form (ngSubmit)="guardar()">
 
-  <form (ngSubmit)="guardar()">
+      <div class="mb-3">
+        <label class="form-label fw-bold">Título</label>
+        <input 
+          type="text"
+          class="form-control" 
+          placeholder="Escribe el título del libro" 
+          [(ngModel)]="libro.titulo" 
+          name="titulo">
+      </div>
 
-    <input class="form-control mb-2" placeholder="Título" [(ngModel)]="libro.titulo" name="titulo">
+      <div class="mb-3">
+        <label class="form-label fw-bold">Autor</label>
+        <input 
+          type="text"
+          class="form-control" 
+          placeholder="Nombre del autor" 
+          [(ngModel)]="libro.autor" 
+          name="autor">
+      </div>
 
-    <input class="form-control mb-2" placeholder="Autor" [(ngModel)]="libro.autor" name="autor">
+      <div class="mb-3">
+        <label class="form-label fw-bold">Editorial</label>
+        <input 
+          type="text"
+          class="form-control" 
+          placeholder="Nombre de la editorial" 
+          [(ngModel)]="libro.editorial" 
+          name="editorial">
+      </div>
 
-    <input class="form-control mb-2" placeholder="Editorial" [(ngModel)]="libro.editorial" name="editorial">
+      <div class="mb-3">
+        <label class="form-label fw-bold">Sinopsis</label>
+        <textarea 
+          class="form-control" 
+          rows="3"
+          placeholder="Breve resumen del libro..." 
+          [(ngModel)]="libro.sinopsis" 
+          name="sinopsis"></textarea>
+      </div>
 
-    <textarea class="form-control mb-2" placeholder="Sinopsis" [(ngModel)]="libro.sinopsis" name="sinopsis"></textarea>
+      <div class="mb-3">
+        <label class="form-label fw-bold">ISBN</label>
+        <input 
+          type="text"
+          class="form-control" 
+          placeholder="Código ISBN" 
+          [(ngModel)]="libro.isbn" 
+          name="isbn">
+      </div>
 
-    <input class="form-control mb-2" placeholder="ISBN" [(ngModel)]="libro.isbn" name="isbn">
+      <div class="mb-3">
+        <label class="form-label fw-bold">Año de Publicación</label>
+        <input 
+          type="number" 
+          class="form-control" 
+          placeholder="Ej. 2026" 
+          [(ngModel)]="libro.anio" 
+          name="anio">
+      </div>
 
-    <input type="number" class="form-control mb-2" placeholder="Año" [(ngModel)]="libro.anio" name="anio">
+      <div class="mb-3">
+        <label class="form-label fw-bold">Stock Disponible</label>
+        <input 
+          type="number" 
+          class="form-control" 
+          placeholder="Cantidad de unidades" 
+          [(ngModel)]="libro.stock" 
+          name="stock">
+      </div>
 
-    <input type="number" class="form-control mb-2" placeholder="Stock" [(ngModel)]="libro.stock" name="stock">
+      <div class="mb-4">
+        <label class="form-label fw-bold">Imagen de Portada</label>
+        <input 
+          type="file" 
+          class="form-control" 
+          (change)="onFileChange($event)">
+      </div>
 
-    <input type="file" class="form-control mb-2" (change)="onFileChange($event)">
-
-    <div class="d-flex gap-2">
+      <div class="d-flex gap-2">
         <button type="button" class="btn btn-secondary w-50" routerLink="/libros">
-            ❌ Cancelar
+          ❌ Cancelar
         </button>
         <button type="submit" class="btn btn-success w-50">
-            Guardar
+          💾 Guardar Libro
         </button>
+      </div>
 
-    </div>
-
-  </form>
-
+    </form>
+  </div>
 </div>
