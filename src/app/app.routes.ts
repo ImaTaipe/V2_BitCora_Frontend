@@ -9,6 +9,12 @@ import { EditarLibro } from './features/libros/editar-libro/editar-libro';
 import { adminGuard } from './core/guards/admin-guard';
 import { NuevoPrestamo } from './features/prestamos/nuevo-prestamo/nuevo-prestamo';
 import { ListaPrestamos } from './features/prestamos/lista-prestamos/lista-prestamos';
+import { ListaUsuarios } from './features/usuarios/lista-usuarios/lista-usuarios';
+import { NuevoUsuario } from './features/usuarios/nuevo-usuario/nuevo-usuario';
+import { EditarUsuario } from './features/usuarios/editar-usuario/editar-usuario';
+import { ListaMultas } from './features/multas/lista-multas/lista-multas';
+import { NuevaMulta } from './features/multas/nueva-multa/nueva-multa';
+
 
 export const routes: Routes = [
     {
@@ -55,6 +61,36 @@ export const routes: Routes = [
 {
   path: 'prestamos/nuevo',
   component: NuevoPrestamo,
+  canActivate: [authGuard]
+},
+
+{
+  path: 'usuarios',
+  component: ListaUsuarios,
+  canActivate: [authGuard]
+},
+
+{
+  path: 'usuarios/nuevo',
+  component: NuevoUsuario,
+  canActivate: [authGuard]
+},
+
+{
+  path: 'usuarios/editar/:id',
+  component: EditarUsuario,
+  canActivate: [authGuard]
+},
+
+{
+  path: 'multas',
+  component: ListaMultas,
+  canActivate: [authGuard]
+},
+
+{
+  path: 'multas/nueva',
+  component: NuevaMulta,
   canActivate: [authGuard]
 },
 

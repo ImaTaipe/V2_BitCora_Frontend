@@ -6,31 +6,17 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class dashboardService {
+  private apiUrl = `${environment.apiUrl}/dashboard`;
+  adminData = signal<any>(null);
+  bibliotecarioData = signal<any>(null);
 
-  private apiUrl =
-    `${environment.apiUrl}/dashboard`;
-
-  adminData =
-    signal<any>(null);
-
-  bibliotecarioData =
-    signal<any>(null);
-
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) { }
 
   cargarDashboardAdmin() {
-
-    return this.http.get<any>(
-      `${this.apiUrl}/admin`
-    );
+    return this.http.get<any>(`${this.apiUrl}/admin`);
   }
 
   cargarDashboardBibliotecario() {
-
-    return this.http.get<any>(
-      `${this.apiUrl}/bibliotecario`
-    );
+    return this.http.get<any>(`${this.apiUrl}/bibliotecario`);
   }
 }

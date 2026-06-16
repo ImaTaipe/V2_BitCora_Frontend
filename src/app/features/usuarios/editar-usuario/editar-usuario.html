@@ -1,0 +1,58 @@
+<div class="container mt-4">
+  <h2>
+    Editar Usuario
+  </h2>
+  <form
+    (ngSubmit)="guardar()">
+    <input
+      class="form-control mb-3"
+      [(ngModel)]="usuario.nombreCompleto"
+      name="nombreCompleto"
+      required>
+    <input
+      class="form-control mb-3"
+      [(ngModel)]="usuario.correo"
+      name="correo"
+      required>
+    <select
+      class="form-select mb-3"
+      [(ngModel)]="usuario.rol"
+      name="rol"
+      required>
+      <option value="Administrador">
+        Administrador
+      </option>
+      <option value="Bibliotecario">
+        Bibliotecario
+      </option>
+      <option value="Lector">
+        Lector
+      </option>
+    </select>
+    <input
+      class="form-control mb-3"
+      [(ngModel)]="usuario.telefono"
+      name="telefono"
+      required>
+    <input
+      class="form-control mb-3"
+      [(ngModel)]="usuario.direccion"
+      name="direccion"
+      required>
+    <div class="form-check mb-3">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [(ngModel)]="usuario.estado"
+        name="estado">
+      <label
+        class="form-check-label">
+        Usuario activo
+      </label>
+    </div>
+    <button
+      class="btn btn-success">
+      Guardar Cambios
+    </button>
+  </form>
+</div>

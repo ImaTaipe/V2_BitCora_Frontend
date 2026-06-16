@@ -1,0 +1,59 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Multas</h2>
+    <button class="btn btn-primary" routerLink="/multas/nueva">Nueva Multa</button>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <div class="col-md-4">
+      <label class="form-label small fw-bold">Buscar por usuario o libro</label>
+      <input type="text" class="form-control" [ngModel]="filtro()" (ngModelChange)="filtro.set($event)" placeholder="Escribe para buscar...">
+    </div>
+    <div class="col-md-4">
+      <label class="form-label small fw-bold">Desde fecha</label>
+      <input type="date" class="form-control" [ngModel]="desde()" (ngModelChange)="desde.set($event)">
+    </div>
+    <div class="col-md-4">
+      <label class="form-label small fw-bold">Hasta fecha</label>
+      <input type="date" class="form-control" [ngModel]="hasta()" (ngModelChange)="hasta.set($event)">
+    </div>
+  </div>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Usuario</th>
+        <th>Libro</th> 
+        <th>Monto</th>
+        <th>Motivo</th>
+        <th>Estado</th>
+        <th>Fecha</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (multa of multasFiltradas(); track multa.id) {
+        <tr>
+          <td>{{ multa.usuario }}</td>
+          <td>{{ multa.libro }}</td>
+          <td>S/ {{ multa.monto }}</td>
+          <td>{{ multa.motivo }}</td>
+          <td>
+            <span class="badge" [class.bg-danger]="multa.estado === 'Pendiente'" [class.bg-success]="multa.estado === 'Pagada'">
+              {{ multa.estado }}
+            </span>
+          </td>
+          <td>{{ multa.fechaEmision | date:'dd/MM/yyyy' }}</td>
+          <td>
+            @if (multa.estado === 'Pendiente') {
+              <button class="btn btn-success btn-sm me-2" (click)="pagar(multa.id)">Pagar</button>
+            }
+            @if (auth.esAdministrador()) {
+              <button class="btn btn-danger btn-sm" (click)="eliminar(multa.id)">Eliminar</button>
+            }
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

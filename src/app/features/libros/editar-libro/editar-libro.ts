@@ -57,19 +57,31 @@ export class EditarLibro implements OnInit {
   }
 
   guardar() {
-    const { imagen, ...payload } = this.libro;
 
-    this.librosService.editarLibro(this.id, payload).subscribe({
+  const payload = {
+    ...this.libro,
+    imagen: this.imagen
+  };
+
+  this.librosService
+    .editarLibro(
+      this.id,
+      payload
+    )
+    .subscribe({
       next: () => {
-        alert('Libro actualizado con éxito');
-        this.router.navigate(['/libros']);
+        alert(
+          'Libro actualizado con éxito'
+        );
+        this.router.navigate(
+          ['/libros']
+        );
       },
       error: (err) => {
-        console.error('Error al actualizar:', err);
-        alert('Hubo un error al guardar los cambios.');
+        console.error(err);
       }
     });
-  }
+}
 }
 
 

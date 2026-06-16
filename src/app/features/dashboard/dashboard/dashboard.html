@@ -1,79 +1,94 @@
 <div class="container mt-4">
-  <h2>Dashboard BitCoraPerú</h2>
-  <hr>
-  <div class="mb-3">
 
-  <a
-    routerLink="/libros"
-    class="btn btn-primary"
-  >
-    Catálogo de Libros
-  </a>
-
+  <!-- ENCABEZADO PRINCIPAL -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Dashboard BitCoraPerú</h2>
+    <a routerLink="/libros" class="btn btn-primary">
+      Catálogo de Libros
+    </a>
+  </div>
   
+  <hr class="mb-4">
 
-</div>
+  <!-- ========================================== -->
+  <!-- VISTA: ADMINISTRADOR                       -->
+  <!-- ========================================== -->
   @if(rol() === 'Administrador') {
-    <div class="row">
+    
+    <!-- Tarjetas de Métricas Principales -->
+    <div class="row mb-4">
       <div class="col-md-3 mb-3">
-        <div class="card p-3">
-          <h6>Total Libros</h6>
-          <h2>{{ admin()?.totalLibros }}</h2>
+        <div class="card p-3 shadow-sm">
+          <h6 class="text-muted text-uppercase small">Total Libros</h6>
+          <h2 class="fw-bold mb-0">{{ admin()?.totalLibros }}</h2>
         </div>
       </div>
+      
       <div class="col-md-3 mb-3">
-        <div class="card p-3">
-          <h6>Total Usuarios</h6>
-          <h2>{{ admin()?.totalUsuarios }}</h2>
+        <div class="card p-3 shadow-sm">
+          <h6 class="text-muted text-uppercase small">Total Usuarios</h6>
+          <h2 class="fw-bold mb-0">{{ admin()?.totalUsuarios }}</h2>
         </div>
       </div>
+      
       <div class="col-md-3 mb-3">
-        <div class="card p-3">
-          <h6>Préstamos Activos</h6>
-          <h2>{{ admin()?.prestamosActivos }}</h2>
+        <div class="card p-3 shadow-sm">
+          <h6 class="text-muted text-uppercase small">Préstamos Activos</h6>
+          <h2 class="fw-bold mb-0">{{ admin()?.prestamosActivos }}</h2>
         </div>
       </div>
+      
       <div class="col-md-3 mb-3">
-        <div class="card p-3">
-          <h6>Multas Recaudadas</h6>
-          <h2>S/ {{ admin()?.multasRecaudadas }}</h2>
+        <div class="card p-3 shadow-sm border-success">
+          <h6 class="text-success text-uppercase small">Multas Recaudadas</h6>
+          <h2 class="fw-bold mb-0">S/ {{ admin()?.multasRecaudadas }}</h2>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <div class="card p-3 shadow-sm border-danger">
+          <h6 class="text-danger text-uppercase small">Préstamos Vencidos</h6>
+          <h2 class="fw-bold mb-0">{{ admin()?.prestamosVencidos }}</h2>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <div class="card p-3 shadow-sm border-warning">
+          <h6 class="text-warning text-uppercase small">Libros sin Stock</h6>
+          <h2 class="fw-bold mb-0">{{ admin()?.librosSinStock }}</h2>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <div class="card p-3 shadow-sm border-info">
+          <h6 class="text-info text-uppercase small">Monto Pendiente</h6>
+          <h2 class="fw-bold mb-0">S/ {{ admin()?.montoPendienteMultas }}</h2>
         </div>
       </div>
     </div>
+
+    <!-- Listas de Información -->
     <div class="row">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">
-            Libros Más Solicitados
-          </div>
-          <div class="card-body">
-            <ul class="list-group">
-              @for(
-                libro of admin()?.topLibros;
-                track libro
-              ) {
-                <li class="list-group-item">
-                  {{ libro }}
-                </li>
+      <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+          <div class="card-header bg-light fw-bold">Libros Más Solicitados</div>
+          <div class="card-body p-0">
+            <ul class="list-group list-group-flush">
+              @for(libro of admin()?.topLibros; track libro) {
+                <li class="list-group-item">{{ libro }}</li>
               }
             </ul>
           </div>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">
-            Usuarios con Sanciones
-          </div>
-          <div class="card-body">
-            <ul class="list-group">
-              @for(
-                usuario of admin()?.usuariosSancionados;
-                track usuario
-              ) {
-                <li class="list-group-item">
-                  {{ usuario }}
-                </li>
+      
+      <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+          <div class="card-header bg-light fw-bold">Usuarios con Sanciones</div>
+          <div class="card-body p-0">
+            <ul class="list-group list-group-flush">
+              @for(usuario of admin()?.usuariosSancionados; track usuario) {
+                <li class="list-group-item">{{ usuario }}</li>
               }
             </ul>
           </div>
@@ -81,49 +96,68 @@
       </div>
     </div>
   }
+
+  <!-- ========================================== -->
+  <!-- VISTA: BIBLIOTECARIO                       -->
+  <!-- ========================================== -->
   @if(rol() === 'Bibliotecario') {
-    <div class="row">
+    
+    <!-- Tarjetas de Métricas -->
+    <div class="row mb-4">
       <div class="col-md-3 mb-3">
-        <div class="card p-3">
-          <h6>Stock Total</h6>
-          <h2>{{ bibliotecario()?.stockTotal }}</h2>
+        <div class="card p-3 shadow-sm">
+          <h6 class="text-muted text-uppercase small">Stock Total</h6>
+          <h2 class="fw-bold mb-0">{{ bibliotecario()?.stockTotal }}</h2>
         </div>
       </div>
+      
       <div class="col-md-3 mb-3">
-        <div class="card p-3">
-          <h6>Préstamos Hoy</h6>
-          <h2>{{ bibliotecario()?.prestamosHoy }}</h2>
+        <div class="card p-3 shadow-sm">
+          <h6 class="text-muted text-uppercase small">Préstamos Hoy</h6>
+          <h2 class="fw-bold mb-0">{{ bibliotecario()?.prestamosHoy }}</h2>
         </div>
       </div>
+      
       <div class="col-md-3 mb-3">
-        <div class="card p-3">
-          <h6>Devoluciones Pendientes</h6>
-          <h2>{{ bibliotecario()?.devolucionesPendientes }}</h2>
+        <div class="card p-3 shadow-sm">
+          <h6 class="text-muted text-uppercase small">Devoluciones Pendientes</h6>
+          <h2 class="fw-bold mb-0">{{ bibliotecario()?.devolucionesPendientes }}</h2>
         </div>
       </div>
+      
       <div class="col-md-3 mb-3">
-        <div class="card p-3">
-          <h6>Multas Pendientes</h6>
-          <h2>{{ bibliotecario()?.multasPendientes }}</h2>
+        <div class="card p-3 shadow-sm">
+          <h6 class="text-muted text-uppercase small">Multas Pendientes</h6>
+          <h2 class="fw-bold mb-0">{{ bibliotecario()?.multasPendientes }}</h2>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <div class="card p-3 shadow-sm border-danger">
+          <h6 class="text-danger text-uppercase small">Préstamos Vencidos</h6>
+          <h2 class="fw-bold mb-0">{{ bibliotecario()?.prestamosVencidos }}</h2>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <div class="card p-3 shadow-sm border-warning">
+          <h6 class="text-warning text-uppercase small">Libros sin Stock</h6>
+          <h2 class="fw-bold mb-0">{{ bibliotecario()?.librosSinStock }}</h2>
         </div>
       </div>
     </div>
-    <div class="card">
-      <div class="card-header">
-        Libros Más Solicitados
-      </div>
-      <div class="card-body">
-        <ul class="list-group">
-          @for(
-            libro of bibliotecario()?.topLibros;
-            track libro
-          ) {
-            <li class="list-group-item">
-              {{ libro }}
-            </li>
+
+    <!-- Listas de Información -->
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-light fw-bold">Libros Más Solicitados</div>
+      <div class="card-body p-0">
+        <ul class="list-group list-group-flush">
+          @for(libro of bibliotecario()?.topLibros; track libro) {
+            <li class="list-group-item">{{ libro }}</li>
           }
         </ul>
       </div>
     </div>
   }
+
 </div>

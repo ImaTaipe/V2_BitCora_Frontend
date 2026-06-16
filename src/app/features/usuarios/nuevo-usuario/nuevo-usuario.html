@@ -1,0 +1,52 @@
+<div class="container mt-4">
+  <h2>
+    Nuevo Usuario
+  </h2>
+  <form
+    (ngSubmit)="guardar()">
+    <input
+      class="form-control mb-3"
+      placeholder="Nombre Completo"
+      [(ngModel)]="usuario.nombreCompleto"
+      name="nombreCompleto">
+    <input
+      class="form-control mb-3"
+      placeholder="Correo"
+      [(ngModel)]="usuario.correo"
+      name="correo">
+    <input
+      type="password"
+      class="form-control mb-3"
+      placeholder="Contraseña"
+      [(ngModel)]="usuario.password"
+      name="password">
+    <select
+      class="form-select mb-3"
+      [(ngModel)]="usuario.rol"
+      name="rol">
+      <option value="Administrador">
+        Administrador
+      </option>
+      <option value="Bibliotecario">
+        Bibliotecario
+      </option>
+      <option value="Lector">
+        Lector
+      </option>
+    </select>
+    <input
+      class="form-control mb-3"
+      placeholder="Teléfono"
+      [(ngModel)]="usuario.telefono"
+      name="telefono">
+    <input
+      class="form-control mb-3"
+      placeholder="Dirección"
+      [(ngModel)]="usuario.direccion"
+      name="direccion">
+    <button
+      class="btn btn-success">
+      Guardar
+    </button>
+  </form>
+</div>

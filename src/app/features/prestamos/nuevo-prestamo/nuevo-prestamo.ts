@@ -15,49 +15,27 @@ import { CommonModule } from '@angular/common';
 export class NuevoPrestamo
 implements OnInit {
 
-  usuarios =
-    signal<any[]>([]);
-
-  libros =
-    signal<any[]>([]);
-
+  usuarios = signal<any[]>([]);
+  libros = signal<any[]>([]);
   usuarioId = 0;
 
   libroId = 0;
-
-  diasPrestamo = 7;
-
+  fechaDevolucion = '';
   constructor(
-    private prestamos:
-      Prestamos,
+    private prestamos: Prestamos,
 
-    private usuariosService:
-      Usuarios,
+    private usuariosService: Usuarios,
 
-    private librosService:
-      LibrosService,
+    private librosService: LibrosService,
 
-    private router:
-      Router
+    private router: Router
   ) {}
 
   ngOnInit(): void {
 
-  this.usuariosService
-    .getAll()
-    .subscribe(data => {
+  this.usuariosService .getAll() .subscribe(data => { this.usuarios.set(data);});
 
-      this.usuarios.set(data);
-
-    });
-
-  this.librosService
-    .getAll()
-    .subscribe(data => {
-
-      this.libros.set(data);
-
-    });
+  this.librosService .getAll() .subscribe(data => { this.libros.set(data); });
 
 }
 
@@ -72,8 +50,7 @@ implements OnInit {
       libroId:
         this.libroId,
 
-      diasPrestamo:
-        this.diasPrestamo
+      fechaDevolucionMaxima:this.fechaDevolucion
 
     })
       .subscribe(() => {

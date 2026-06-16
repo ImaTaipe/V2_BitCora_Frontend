@@ -33,4 +33,9 @@ export class Prestamos {
       {}
     );
   }
+  getActivosUsuario(usuarioId: number) {
+  return this.http.get<any[]>(
+    `${this.apiUrl}/activos-usuario/${usuarioId}`
+  );
+}
 }

@@ -1,0 +1,60 @@
+<div class="container mt-4">
+  <div
+    class="d-flex justify-content-between align-items-center mb-3">
+    <h2>
+      Usuarios
+    </h2>
+    <button
+      class="btn btn-primary"
+      routerLink="/usuarios/nuevo">
+      Nuevo Usuario
+    </button>
+  </div>
+  <table
+    class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Correo</th>
+        <th>Rol</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (usuario of usuarios(); track usuario.id) {
+  <tr [class.table-secondary]="!usuario.estado">
+    <td>{{ usuario.nombreCompleto }}</td>
+    <td>{{ usuario.correo }}</td>
+    <td>{{ usuario.rol }}</td>
+
+    <td>
+      @if (usuario.estado) {
+        <span class="badge bg-success">
+          Activo
+        </span>
+      } @else {
+        <span class="badge bg-danger">
+          Inactivo
+        </span>
+      }
+    </td>
+
+    <td>
+      <button
+        class="btn btn-warning btn-sm me-2"
+        [routerLink]="['/usuarios/editar', usuario.id]">
+        Editar
+      </button>
+
+      <button
+        class="btn btn-danger btn-sm"
+        (click)="eliminar(usuario.id)">
+        Eliminar
+      </button>
+    </td>
+  </tr>
+}
+    </tbody>
+  </table>
+</div>

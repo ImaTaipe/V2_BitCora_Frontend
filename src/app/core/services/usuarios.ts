@@ -25,4 +25,28 @@ export class Usuarios {
       `${this.apiUrl}/${id}`
     );
   }
+
+  create(data: any) {
+    return this.http.post(
+      this.apiUrl,
+      data
+    );
+  }
+
+  update(
+    id: number,
+    data: any
+  ) {
+    return this.http.put(
+      `${this.apiUrl}/${id}`,
+      data
+    );
+  }
+
+  delete(id: number) {
+    return this.http.delete(
+      `${this.apiUrl}/${id}`
+    );
+  }
+
 }

@@ -1,0 +1,56 @@
+<div class="container mt-4 d-flex justify-content-center">
+  <div class="card p-4 shadow-sm" style="width: 100%; max-width: 500px;">
+    <h3 class="text-center mb-4">⚖️ Registrar Nueva Multa</h3>
+    
+    <form (ngSubmit)="guardar()">
+      <div class="mb-3">
+        <label class="form-label fw-bold">Usuario</label>
+        <select class="form-select" [(ngModel)]="usuarioId" (change)="onUsuarioChange()" name="usuarioId">
+          <option [ngValue]="0">Seleccione usuario</option>
+          @for (u of usuarios(); track u.id) {
+            <option [ngValue]="u.id">{{ u.nombreCompleto }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-bold">Préstamos del usuario</label>
+        <select class="form-select" [(ngModel)]="prestamoId" name="prestamoId">
+          <option [ngValue]="0">Seleccione préstamo</option>
+          @for (p of prestamos(); track p.id) {
+            <option [ngValue]="p.id">{{ p.libro }} (Prestamo #{{ p.id }})</option>
+          }
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-bold">Motivo</label>
+        <select class="form-select" [(ngModel)]="motivo" name="motivo" (change)="cambiarMotivo()">
+          <option value="">Seleccione...</option>
+          <option value="Retraso">Retraso</option>
+          <option value="Daño de material">Daño de material</option>
+          <option value="Manchas o rayones">Manchas o rayones</option>
+          <option value="Pérdida de libro">Pérdida de libro</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </div>
+
+      @if (motivo === 'Otro') {
+        <div class="mb-3">
+          <label class="form-label fw-bold text-danger">Especifique el motivo</label>
+          <input type="text" class="form-control" [(ngModel)]="otroMotivo" name="otroMotivo" placeholder="Escribe la razón de la multa..." required>
+        </div>
+      }
+
+      <div class="mb-4">
+        <label class="form-label fw-bold">Monto (S/)</label>
+        <input type="number" class="form-control" [(ngModel)]="monto" name="monto">
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-secondary me-2" routerLink="/multas">❌ Cancelar</button>
+        <button type="submit" class="btn btn-danger">💾 Guardar Multa</button>
+      </div>
+    </form>
+  </div>
+</div>

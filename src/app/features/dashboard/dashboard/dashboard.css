@@ -1,0 +1,15 @@
+.card {
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+.card h2 {
+  font-weight: bold;
+}
+
+.card h6 {
+  color: #666;
+}
