@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
       this.dashboardService.cargarDashboardBibliotecario().subscribe(data => this.bibliotecario.set(data));
     }
     if (user.rol === 'Lector') { this.dashboardService .cargarDashboardLector().subscribe(data => {this.lector.set(data);
-    });
+    console.log('Estructura Dashboard Lector:', data);});
     }
   }
   abrirResena(libroId: number) {
@@ -67,6 +67,13 @@ export class DashboardComponent implements OnInit {
         alert('Reseña registrada');
 
         this.resenaLibroId.set(null);
+        this.dashboardService
+  .cargarDashboardLector()
+  .subscribe(data => {
+
+    this.lector.set(data);
+
+  });
 
       },
       error: err => {
@@ -79,4 +86,9 @@ export class DashboardComponent implements OnInit {
     });
 
 }
+obtenerImagen(url?: string) {
+    if (!url) return '';
+    if (url.startsWith('http')) return url;
+    return `https://localhost:7220${url}`;
+  }
 }

@@ -1,7 +1,7 @@
 <div class="container mt-4">
 
-  <!-- ENCABEZADO PRINCIPAL -->
   <div class="d-flex justify-content-between align-items-center mb-4">
+
     <h2>Dashboard BitCoraPerú</h2>
     <a routerLink="/libros" class="btn btn-primary">
       Catálogo de Libros
@@ -9,14 +9,11 @@
   </div>
   
   <hr class="mb-4">
-
-  <!-- ========================================== -->
-  <!-- VISTA: ADMINISTRADOR                       -->
-  <!-- ========================================== -->
-  @if(rol() === 'Administrador') {
-    
-    <!-- Tarjetas de Métricas Principales -->
+  
+  @if(rol() === 'Administrador')
+  {
     <div class="row mb-4">
+
       <div class="col-md-3 mb-3">
         <div class="card p-3 shadow-sm">
           <h6 class="text-muted text-uppercase small">Total Libros</h6>
@@ -74,8 +71,8 @@
         </div>
       </div>
 
-    <!-- Listas de Información -->
     <div class="row">
+
       <div class="col-md-6 mb-4">
         <div class="card shadow-sm">
           <div class="card-header bg-light fw-bold">Libros Más Solicitados</div>
@@ -104,12 +101,8 @@
     </div>
   }
 
-  <!-- ========================================== -->
-  <!-- VISTA: BIBLIOTECARIO                       -->
-  <!-- ========================================== -->
-  @if(rol() === 'Bibliotecario') {
-    
-    <!-- Tarjetas de Métricas -->
+  @if(rol() === 'Bibliotecario')
+  {
     <div class="row mb-4">
       <div class="col-md-3 mb-3">
         <div class="card p-3 shadow-sm">
@@ -153,8 +146,7 @@
         </div>
       </div>
     </div>
-
-    <!-- Listas de Información -->
+    
     <div class="card shadow-sm mb-4">
       <div class="card-header bg-light fw-bold">Libros Más Solicitados</div>
       <div class="card-body p-0">
@@ -166,10 +158,7 @@
       </div>
     </div>
   }
-
-  <!-- ========================================== -->
-  <!-- VISTA: LECTOR                              -->
-  <!-- ========================================== -->
+  
   @if(rol() === 'Lector') {
 
     <div class="card mb-4">
@@ -177,13 +166,25 @@
         📚 Mis Libros Actuales
       </div>
       <div class="card-body">
-        @for(libro of lector()?.misLibrosActuales; track libro.libroId) {
-          <div class="border rounded p-2 mb-2">
-            <strong>{{ libro.titulo }}</strong>
-            <br>
-            Devolver antes de: {{ libro.fechaDevolucionMaxima | date:'dd/MM/yyyy' }}
-          </div>
-        }
+        <div class="d-flex overflow-x-auto flex-nowrap gap-3 pb-3">
+          
+          @for(libro of lector()?.misLibrosActuales; track libro.libroId) {
+            <div class="card border rounded p-2 flex-shrink-0" style="width: 240px;">
+              
+              <img [src]="libro.urlImagen ? obtenerImagen(libro.urlImagen) : 'https://placehold.co/240x280?text=Sin+Portada'" 
+                   class="card-img-top mb-2" 
+                   style="height: 280px; object-fit: cover;">
+
+              <div>
+                <strong>{{ libro.titulo }}</strong>
+                <br>
+                <small class="text-danger">Devolver antes de: {{ libro.fechaDevolucionMaxima | date:'dd/MM/yyyy' }}</small>
+              </div>
+
+            </div>
+          }
+
+        </div>
       </div>
     </div>
 
@@ -197,7 +198,7 @@
           @for(libro of lector()?.bibliotecaLeidos; track libro.libroId) {
             <div class="card border rounded p-2 flex-shrink-0" style="width: 240px;">
               
-              <img [src]="(libro.urlImagen)" 
+              <img [src]="libro.urlImagen ? obtenerImagen(libro.urlImagen) : 'https://placehold.co/240x280?text=Sin+Portada'" 
                    class="card-img-top mb-2" 
                    style="height: 280px; object-fit: cover;">
 
@@ -208,9 +209,18 @@
               </div>
 
               <div class="mt-2">
-                <button class="btn btn-sm btn-primary w-100" (click)="abrirResena(libro.libroId)">
-                  Dejar reseña
-                </button>
+                @if(!libro.tieneResena) {
+                  <button
+                    class="btn btn-sm btn-primary w-100"
+                    (click)="abrirResena(libro.libroId)">
+                    Dejar reseña
+                  </button>
+                }
+                @else {
+                  <span class="badge bg-success w-100">
+                    ✓ Reseña registrada
+                  </span>
+                }
               </div>
 
               @if(resenaLibroId() === libro.libroId) {

@@ -1,63 +1,25 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a
-      class="navbar-brand"
-      routerLink="/dashboard">
-      BitCoraPerú
-    </a>
-    <div class="navbar-nav">
-      <a
-        class="nav-link"
-        routerLink="/dashboard">
-        Dashboard
-      </a>
-      <a
-        class="nav-link"
-        routerLink="/libros">
-        Libros
-      </a>
+<nav class="bib-nav">
+  <div class="bib-nav-left">
+    <a class="bib-brand" routerLink="/dashboard">BitCoraPerú</a>
+    <div class="bib-links">
+      <a class="bib-link" routerLink="/dashboard">Dashboard</a>
+      <a class="bib-link" routerLink="/libros">Libros</a>
       @if (auth.puedeGestionarPrestamos()) {
-        <a
-          class="nav-link"
-          routerLink="/prestamos">
-          Préstamos
-        </a>
+        <a class="bib-link" routerLink="/prestamos">Préstamos</a>
       }
       @if (auth.esAdministrador()) {
-        <a
-          class="nav-link"
-          routerLink="/usuarios">
-          Usuarios
-        </a>
+        <a class="bib-link" routerLink="/usuarios">Usuarios</a>
       }
-      @if ( auth.esAdministrador() || auth.esBibliotecario() ) {
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/multas">
-            Multas
-          </a>
-        </li>
+      @if (auth.esAdministrador() || auth.esBibliotecario()) {
+        <a class="bib-link" routerLink="/multas">Multas</a>
       }
-      @if ( auth.esAdministrador() || auth.esBibliotecario() ) {
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/resenas">
-            Reseñas
-          </a>
-        </li>
+      @if (auth.esAdministrador() || auth.esBibliotecario()) {
+        <a class="bib-link" routerLink="/resenas">Reseñas</a>
       }
     </div>
-    <div class="d-flex align-items-center text-white">
-      <span class="me-3">
-        {{ auth.getRol() }}
-      </span>
-      <button
-        class="btn btn-outline-light btn-sm"
-        (click)="logout()">
-        Salir
-      </button>
-    </div>
+  </div>
+  <div class="bib-nav-right">
+    <span class="bib-rol">{{ auth.getRol() }}</span>
+    <button class="bib-logout" (click)="logout()">Salir</button>
   </div>
 </nav>
