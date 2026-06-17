@@ -8,6 +8,9 @@
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .bib-nav-left {
@@ -64,14 +67,11 @@
 
 .bib-rol {
   font-family: 'Inter', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 500;
+  font-size: 0.85rem;
+  font-weight: 600;
   color: #D1CFE2;
-  background: #40405C;
-  padding: 4px 10px;
-  border-radius: 12px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
 }
 
 .bib-logout {
@@ -91,9 +91,4 @@
 .bib-logout:hover {
   background: #B23C3C;
   transform: translateY(-1px);
-}
-
-.bib-logout:hover {
-  background: #40405C;
-  color: #D1CFE2;
 }
