@@ -197,7 +197,7 @@
           @for(libro of lector()?.bibliotecaLeidos; track libro.libroId) {
             <div class="card border rounded p-2 flex-shrink-0" style="width: 240px;">
               
-              <img [src]="obtenerImagen(libro.urlImagen)" 
+              <img [src]="(libro.urlImagen)" 
                    class="card-img-top mb-2" 
                    style="height: 280px; object-fit: cover;">
 
