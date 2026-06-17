@@ -17,6 +17,8 @@ export interface Libro {
   stock: number;
 
   urlImagen?: string;
-
+  
   estado: boolean;
+  promedioEstrellas: number;
+  cantidadResenas: number;
 }

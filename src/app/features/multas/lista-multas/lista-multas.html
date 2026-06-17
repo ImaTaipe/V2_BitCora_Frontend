@@ -35,8 +35,7 @@
         <th>Motivo</th>
         <th>Estado</th>
         <th>Fecha</th>
-        <th>Acciones</th>
-      </tr>
+        <th style="width: 160px;">Acciones</th> </tr>
     </thead>
     <tbody>
       @for (multa of multasFiltradas(); track multa.id) {
@@ -52,12 +51,19 @@
           </td>
           <td>{{ multa.fechaEmision | date:'dd/MM/yyyy' }}</td>
           <td>
-            @if (multa.estado === 'Pendiente') {
-              <button class="btn btn-success btn-sm me-2" (click)="pagar(multa.id)">Pagar</button>
-            }
-            @if (auth.esAdministrador()) {
-              <button class="btn btn-danger btn-sm" (click)="eliminar(multa.id)">Eliminar</button>
-            }
+            <div class="d-flex gap-2 align-items-center">
+              
+              @if (multa.estado === 'Pendiente') {
+                <button class="btn btn-success btn-sm" (click)="pagar(multa.id)">Pagar</button>
+              } @else {
+                <div style="width: 53px;"></div> 
+              }
+
+              @if (auth.esAdministrador()) {
+                <button class="btn btn-danger btn-sm" (click)="eliminar(multa.id)">Eliminar</button>
+              }
+
+            </div>
           </td>
         </tr>
       } @empty {

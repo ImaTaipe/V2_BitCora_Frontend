@@ -1,0 +1,92 @@
+<div class="container mt-4">
+
+  <h2>
+    Nueva Reseña
+  </h2>
+
+  <form
+    (ngSubmit)="guardar()">
+
+    <div class="mb-3">
+
+      <label>
+        Libro
+      </label>
+
+      <select
+        class="form-select"
+        [(ngModel)]="libroId"
+        name="libroId">
+
+        <option
+          [ngValue]="0">
+
+          Seleccione...
+
+        </option>
+
+        @for (
+          libro of libros();
+          track libro.libroId
+        ) {
+
+          <option
+            [ngValue]="libro.libroId">
+
+            {{ libro.titulo }}
+
+          </option>
+
+        }
+
+      </select>
+
+    </div>
+
+    <div class="mb-3">
+
+      <label>
+        Calificación
+      </label>
+
+      <select
+        class="form-select"
+        [(ngModel)]="estrellas"
+        name="estrellas">
+
+        <option [ngValue]="1">⭐</option>
+        <option [ngValue]="2">⭐⭐</option>
+        <option [ngValue]="3">⭐⭐⭐</option>
+        <option [ngValue]="4">⭐⭐⭐⭐</option>
+        <option [ngValue]="5">⭐⭐⭐⭐⭐</option>
+
+      </select>
+
+    </div>
+
+    <div class="mb-3">
+
+      <label>
+        Comentario
+      </label>
+
+      <textarea
+        class="form-control"
+        rows="4"
+        [(ngModel)]="comentario"
+        name="comentario">
+
+      </textarea>
+
+    </div>
+
+    <button
+      class="btn btn-primary">
+
+      Publicar reseña
+
+    </button>
+
+  </form>
+
+</div>

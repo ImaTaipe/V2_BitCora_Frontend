@@ -38,7 +38,16 @@
             Multas
           </a>
         </li>
-        }
+      }
+      @if ( auth.esAdministrador() || auth.esBibliotecario() ) {
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/resenas">
+            Reseñas
+          </a>
+        </li>
+      }
     </div>
     <div class="d-flex align-items-center text-white">
       <span class="me-3">

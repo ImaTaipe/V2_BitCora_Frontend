@@ -15,6 +15,8 @@ import { EditarUsuario } from './features/usuarios/editar-usuario/editar-usuario
 import { ListaMultas } from './features/multas/lista-multas/lista-multas';
 import { NuevaMulta } from './features/multas/nueva-multa/nueva-multa';
 import { HistorialPrestamos } from './features/prestamos/historial-prestamos/historial-prestamos';
+import { NuevaResena } from './features/resenas/nueva-resena/nueva-resena';
+import { ListaResenas } from './features/resenas/lista-resenas/lista-resenas';
 
 
 
@@ -100,6 +102,14 @@ export const routes: Routes = [
     path: 'prestamos/historial',
     component: HistorialPrestamos,
     canActivate: [authGuard]
+  },
+  {
+  path: 'resenas',
+  component: ListaResenas
+  },
+  {
+    path: 'resenas/nueva',
+    component: NuevaResena
   },
 
   {

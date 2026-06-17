@@ -19,4 +19,10 @@ export class dashboardService {
   cargarDashboardBibliotecario() {
     return this.http.get<any>(`${this.apiUrl}/bibliotecario`);
   }
+
+  cargarDashboardLector() {
+  return this.http.get<any>(
+    `${this.apiUrl}/lector`
+  );
+}
 }

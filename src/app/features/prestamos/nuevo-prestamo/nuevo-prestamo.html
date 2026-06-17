@@ -1,46 +1,29 @@
 <div class="container mt-4" style="max-width: 600px;">
   <h2>Nuevo Préstamo</h2>
   <hr>
-
   <form (ngSubmit)="guardar()" class="card p-4 shadow-sm">
-    
     <div class="mb-3">
       <label class="form-label fw-bold">Usuario</label>
       <select class="form-select" [(ngModel)]="usuarioId" name="usuarioId">
         <option [ngValue]="0">Seleccione...</option>
         @for (usuario of usuarios(); track usuario.id) {
-          <option [ngValue]="usuario.id">
-            {{ usuario.nombreCompleto }}
-          </option>
+          <option [ngValue]="usuario.id">{{ usuario.nombreCompleto }}</option>
         }
       </select>
     </div>
-
     <div class="mb-3">
       <label class="form-label fw-bold">Libro</label>
       <select class="form-select" [(ngModel)]="libroId" name="libroId">
         <option [ngValue]="0">Seleccione...</option>
         @for (libro of libros(); track libro.id) {
-          <option [ngValue]="libro.id">
-            {{ libro.titulo }} (Stock: {{ libro.stock }})
-          </option>
+          <option [ngValue]="libro.id">{{ libro.titulo }} (Stock: {{ libro.stock }})</option>
         }
       </select>
     </div>
-
     <div class="mb-4">
       <label class="form-label fw-bold">Fecha de devolución</label>
-      <input 
-        type="date" 
-        class="form-control" 
-        [(ngModel)]="fechaDevolucion" 
-        name="fechaDevolucion"
-        required
-      >
+      <input type="date" class="form-control" [(ngModel)]="fechaDevolucion" name="fechaDevolucion" required>
     </div>
-
-    <button type="submit" class="btn btn-success w-100">
-      🚀 Registrar Préstamo
-    </button>
+    <button type="submit" class="btn btn-success w-100">🚀 Registrar Préstamo</button>
   </form>
 </div>

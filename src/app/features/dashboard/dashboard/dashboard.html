@@ -167,4 +167,84 @@
     </div>
   }
 
+  <!-- ========================================== -->
+  <!-- VISTA: LECTOR                              -->
+  <!-- ========================================== -->
+  @if(rol() === 'Lector') {
+
+    <div class="card mb-4">
+      <div class="card-header">
+        📚 Mis Libros Actuales
+      </div>
+      <div class="card-body">
+        @for(libro of lector()?.misLibrosActuales; track libro.libroId) {
+          <div class="border rounded p-2 mb-2">
+            <strong>{{ libro.titulo }}</strong>
+            <br>
+            Devolver antes de: {{ libro.fechaDevolucionMaxima | date:'dd/MM/yyyy' }}
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        📖 Biblioteca de Leídos
+      </div>
+      <div class="card-body">
+        <div class="d-flex overflow-x-auto flex-nowrap gap-3 pb-3">
+          
+          @for(libro of lector()?.bibliotecaLeidos; track libro.libroId) {
+            <div class="card border rounded p-2 flex-shrink-0" style="width: 240px;">
+              
+              <img [src]="obtenerImagen(libro.urlImagen)" 
+                   class="card-img-top mb-2" 
+                   style="height: 280px; object-fit: cover;">
+
+              <div>
+                <strong>{{ libro.titulo }}</strong>
+                <br>
+                <small class="text-muted">Devuelto: {{ libro.fechaEntregaReal | date:'dd/MM/yyyy' }}</small>
+              </div>
+
+              <div class="mt-2">
+                <button class="btn btn-sm btn-primary w-100" (click)="abrirResena(libro.libroId)">
+                  Dejar reseña
+                </button>
+              </div>
+
+              @if(resenaLibroId() === libro.libroId) {
+                <div class="card mt-3">
+                  <div class="card-body p-2">
+                    <div class="mb-2">
+                      <label class="small">Calificación</label>
+                      <select class="form-select form-select-sm" [(ngModel)]="estrellas">
+                        <option [ngValue]="1">⭐</option>
+                        <option [ngValue]="2">⭐⭐</option>
+                        <option [ngValue]="3">⭐⭐⭐</option>
+                        <option [ngValue]="4">⭐⭐⭐⭐</option>
+                        <option [ngValue]="5">⭐⭐⭐⭐⭐</option>
+                      </select>
+                    </div>
+
+                    <div class="mb-2">
+                      <label class="small">Comentario</label>
+                      <textarea class="form-control form-control-sm" rows="2" [(ngModel)]="comentario"></textarea>
+                    </div>
+
+                    <button class="btn btn-sm btn-success w-100" (click)="guardarResena(libro.libroId)">
+                      Publicar
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+
+        </div>
+      </div>
+    </div>
+
+  }
+
 </div>

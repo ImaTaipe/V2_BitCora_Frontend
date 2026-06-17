@@ -1,5 +1,5 @@
 import { Component, OnInit, signal, computed } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common'; // 📄 Añadido DatePipe
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Prestamos } from '../../../core/services/prestamos';
 import jsPDF from 'jspdf';
@@ -7,6 +7,7 @@ import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-historial-prestamos',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   providers: [DatePipe], // 📄 Proveedor para formatear fechas desde lógica TS
   templateUrl: './historial-prestamos.html',

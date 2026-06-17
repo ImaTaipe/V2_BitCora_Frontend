@@ -38,4 +38,9 @@ export class Prestamos {
     `${this.apiUrl}/activos-usuario/${usuarioId}`
   );
 }
+getMisLibrosResenables() {
+  return this.http.get<any[]>(
+    `${this.apiUrl}/mis-libros-resenables`
+  );
+}
 }
