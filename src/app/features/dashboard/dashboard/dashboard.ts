@@ -1,4 +1,15 @@
-import { Component, signal, OnInit } from '@angular/core';
+import {
+  Component,
+  signal,
+  OnInit,
+  AfterViewInit,
+  ElementRef,
+  ViewChild
+} from '@angular/core';
+
+import { Chart, registerables } from 'chart.js';
+
+Chart.register(...registerables);
 import { dashboardService } from '../../../core/services/dashboard';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -14,7 +25,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
   rol = signal('');
   admin = signal<any>(null);
   bibliotecario = signal<any>(null);
@@ -22,6 +33,11 @@ export class DashboardComponent implements OnInit {
   resenaLibroId = signal<number | null>(null);
   comentario = '';
   estrellas = 5;
+  @ViewChild('chartTopLibros')
+  chartTopLibrosRef!: ElementRef;
+
+  @ViewChild('chartUsuarios')
+  chartUsuariosRef!: ElementRef;
 
  constructor(
   private dashboardService: dashboardService,
@@ -33,7 +49,20 @@ export class DashboardComponent implements OnInit {
     this.rol.set(user.rol);
 
     if (user.rol === 'Administrador') {
-      this.dashboardService.cargarDashboardAdmin().subscribe(data => this.admin.set(data));
+      this.dashboardService
+  .cargarDashboardAdmin()
+  .subscribe(data => {
+
+    this.admin.set(data);
+
+    setTimeout(() => {
+
+      this.initTopLibrosChart();
+      this.initUsuariosChart();
+
+    });
+
+  });
     }
     if (user.rol === 'Bibliotecario') {
       this.dashboardService.cargarDashboardBibliotecario().subscribe(data => this.bibliotecario.set(data));
@@ -42,6 +71,100 @@ export class DashboardComponent implements OnInit {
     console.log('Estructura Dashboard Lector:', data);});
     }
   }
+
+  ngAfterViewInit() {}
+  initUsuariosChart() {
+
+  if (!this.chartUsuariosRef) return;
+
+  const usuarios =
+    this.admin()?.usuariosSancionados ?? [];
+
+  new Chart(
+    this.chartUsuariosRef.nativeElement,
+    {
+      type: 'doughnut',
+
+      data: {
+
+        labels: usuarios,
+
+        datasets: [
+          {
+            data: usuarios.map(() => 1),
+
+            backgroundColor: [
+              '#D95B5B',
+              '#D6A54C',
+              '#6A87D8',
+              '#4F8A67',
+              '#8A6AD8'
+            ]
+          }
+        ]
+      },
+
+      options: {
+
+        responsive: true,
+
+        maintainAspectRatio: false,
+
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    });
+}
+
+  initTopLibrosChart() {
+
+  if (!this.chartTopLibrosRef) return;
+
+  const libros = this.admin()?.topLibros ?? [];
+
+  new Chart(
+    this.chartTopLibrosRef.nativeElement,
+    {
+      type: 'bar',
+
+      data: {
+
+        labels: libros,
+
+        datasets: [
+          {
+            label: 'Solicitudes',
+
+            data: libros.map(
+              (_: any, i: number) =>
+                libros.length - i
+            ),
+
+            backgroundColor:
+              '#40405C',
+
+            borderRadius: 10
+          }
+        ]
+      },
+
+      options: {
+
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+
+        responsive: true,
+
+        maintainAspectRatio: false
+      }
+    });
+}
   abrirResena(libroId: number) {
 
   if (this.resenaLibroId() === libroId) {
