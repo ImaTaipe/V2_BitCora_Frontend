@@ -20,19 +20,85 @@
           type="text"
           class="form-input"
           [(ngModel)]="nombre"
-          name="nombre">
+          name="nombre"
+          (ngModelChange)="!$event.trim() && (mostrarLibros = false)">
+
+          @if(errorNombre){
+  <small class="error-text">
+    {{ errorNombre }}
+  </small>
+}
 
       </div>
+
+      @if(nombre.trim()){
+
+        <div class="form-group">
+
+          <label class="checkbox-label">
+
+            <input
+              type="checkbox"
+              [(ngModel)]="mostrarLibros"
+              name="mostrarLibros">
+
+            Agregar libros a esta categoría
+
+          </label>
+
+        </div>
+
+      }
+
+      @if(nombre.trim() && mostrarLibros){
+
+        <div class="form-group">
+
+          <label class="form-label">
+            Seleccionar libros
+          </label>
+
+          <div class="libros-box">
+
+            @for(libro of libros; track libro.id){
+
+              <label class="libro-item">
+
+                <input
+                  type="checkbox"
+                  [checked]="estaSeleccionado(libro.id)"
+                  (change)="toggleLibro(libro.id)">
+
+                <span>
+                  {{ libro.titulo }}
+                </span>
+
+              </label>
+
+            }
+
+          </div>
+
+        </div>
+
+      }
 
       <div class="actions-container">
 
         <button
-          type="submit"
-          class="btn-modern">
+    type="button"
+    class="btn-modern btn-cancelar-rojo"
+    (click)="cancelar()">
 
-          Guardar
+    Cancelar
+  </button>
 
-        </button>
+  <button
+    type="submit"
+    class="btn-modern btn-guardar-verde">
+
+    Guardar
+  </button>
 
       </div>
 

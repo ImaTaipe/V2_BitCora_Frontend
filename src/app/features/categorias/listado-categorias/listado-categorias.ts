@@ -22,12 +22,13 @@ export class ListadoCategorias implements OnInit {
   }
 
   cargar() {
-    this.categoriasService
-      .getAll()
-      .subscribe(data => {
-        this.categorias.set(data);
-      });
-  }
+  this.categoriasService
+    .getAll()
+    .subscribe(data => {
+      const ordenado = [...data].sort((a, b) => a.id - b.id);
+      this.categorias.set(ordenado);
+    });
+}
 
   eliminar(id: number) {
 

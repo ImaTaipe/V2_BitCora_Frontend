@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {ActivatedRoute,Router} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 
 import { Categorias } from '../../../core/services/categorias';
 
@@ -13,6 +13,7 @@ import { Categorias } from '../../../core/services/categorias';
 export class EditarCategoria implements OnInit {
 
   id = 0;
+  errorNombre = '';
 
   categoria: any = {
     nombre: '',
@@ -40,21 +41,36 @@ export class EditarCategoria implements OnInit {
 
   guardar() {
 
+  const nombreNormalizado = this.categoria.nombre.trim().toLowerCase();
+
+  this.categoriasService.getAll().subscribe(categorias => {
+
+    const existe = categorias.some(c =>
+      c.nombre.trim().toLowerCase() === nombreNormalizado &&
+      c.id !== this.id // 👈 clave: excluir la misma categoría
+    );
+
+    if (existe) {
+      this.errorNombre = 'Ya existe una categoría con este nombre';
+      return;
+    }
+
+    this.errorNombre = '';
+
     this.categoriasService
-      .update(
-        this.id,
-        this.categoria
-      )
+      .update(this.id, this.categoria)
       .subscribe(() => {
 
-        alert(
-          'Categoría actualizada'
-        );
+        alert('Categoría actualizada');
 
-        this.router.navigate(
-          ['/categorias']
-        );
+        this.router.navigate(['/categorias']);
 
       });
-  }
+
+  });
+
+}
+cancelar() {
+  this.router.navigate(['/categorias']);
+}
 }

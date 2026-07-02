@@ -1,70 +1,80 @@
-<div class="container mt-4">
+<div class="tabla-container">
+  <div class="card vista-card">
 
-  <h2>Categorías</h2>
+    <div class="vista-header">
+      <h2 class="perfil-title">Categorías</h2>
 
-  <hr>
+      <div class="header-actions">
+        <button
+          class="btn-tabla-action btn-principal"
+          routerLink="/categorias/nueva">
 
-  <button
-    class="btn btn-primary mb-3"
-    routerLink="/categorias/nueva">
+          + Nueva Categoría
+        </button>
+      </div>
+    </div>
 
-    + Nueva Categoría
+    <div class="table-responsive">
+      <table class="custom-table">
 
-  </button>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th class="text-center">Acciones</th>
+          </tr>
+        </thead>
 
-  <table class="table table-striped">
+        <tbody>
+          @for (categoria of categorias(); track categoria.id; let i = $index) {
+            <tr [class.row-inactivo]="!categoria.estado">
 
-    <thead>
+              <!-- ID visual consecutivo -->
+              <td>{{ i + 1 }}</td>
 
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Estado</th>
-        <th>Acciones</th>
-      </tr>
+              <td class="fw-semibold">
+                {{ categoria.nombre }}
+              </td>
 
-    </thead>
+              <td>
+                @if (categoria.estado) {
+                  <span class="custom-badge badge-completado">
+                    Activo
+                  </span>
+                } @else {
+                  <span class="custom-badge badge-alerta">
+                    Inactivo
+                  </span>
+                }
+              </td>
 
-    <tbody>
+              <td class="text-center">
 
-      @for(categoria of categorias(); track categoria.id){
+                <button
+                  class="btn-icon btn-edit me-2"
+                  [routerLink]="['/categorias/editar', categoria.id]"
+                  title="Editar">
 
-        <tr>
+                  <i class="bi bi-pencil-fill"></i>
+                </button>
 
-          <td>{{ categoria.id }}</td>
+                <button
+                  class="btn-icon btn-delete"
+                  (click)="eliminar(categoria.id)"
+                  title="Eliminar">
 
-          <td>{{ categoria.nombre }}</td>
+                  <i class="bi bi-trash-fill"></i>
+                </button>
 
-          <td>
-            {{ categoria.estado ? 'Activo' : 'Inactivo' }}
-          </td>
+              </td>
 
-          <td>
+            </tr>
+          }
+        </tbody>
 
-            <button
-              class="btn btn-warning btn-sm"
-              [routerLink]="['/categorias/editar', categoria.id]">
+      </table>
+    </div>
 
-              Editar
-
-            </button>
-
-            <button
-              class="btn btn-danger btn-sm ms-2"
-              (click)="eliminar(categoria.id)">
-
-              Eliminar
-
-            </button>
-
-          </td>
-
-        </tr>
-
-      }
-
-    </tbody>
-
-  </table>
-
+  </div>
 </div>

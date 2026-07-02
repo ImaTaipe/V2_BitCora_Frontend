@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #F6F5F9;
+  --text: #1E1F2C;
+  --text-soft: #4E4C67;
+  --accent: #383852;
+  --border: #E2DFEE;
+}
+
+.tabla-container {
+  min-height: 80vh;
+  background: var(--bg);
+  padding: 2.5rem;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.vista-card {
+  width: 100%;
+  max-width: 1400px;
+  background: white;
+  border-radius: 28px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+  border: none;
+}
+
+.vista-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.perfil-title {
+  margin: 0;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.85rem;
+}
+
+.btn-tabla-action {
+  padding: .8rem 1.4rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: .2s;
+  border: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-principal {
+  background: #2A43C1;
+  color: white;
+}
+
+.btn-principal:hover {
+  background: #1C2E8E;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 16px;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+.custom-table th {
+  padding: 1.2rem 1rem;
+  font-weight: 700;
+  background: #F9F9FC;
+  border-bottom: 3px solid var(--border);
+}
+
+.custom-table td {
+  padding: 1.2rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.custom-table tbody tr:hover {
+  background: #F7F6FA;
+}
+
+.row-inactivo {
+  background: #FAFAFC;
+}
+
+.row-inactivo td {
+  color: var(--text-soft);
+}
+
+.fw-semibold {
+  font-weight: 600;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.custom-badge {
+  padding: .5rem 1rem;
+  font-weight: 700;
+  border-radius: 12px;
+  display: inline-block;
+  font-size: 0.85rem;
+}
+
+.badge-completado {
+  background: #D4EDDA;
+  color: #155724;
+}
+
+.badge-alerta {
+  background: #F8D7DA;
+  color: #721C24;
+}
+
+.btn-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.btn-edit {
+  background: #EAB308;
+  color: white;
+}
+
+.btn-edit:hover {
+  background: #CA8A04;
+}
+
+.btn-delete {
+  background: #EF4444;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #DC2626;
+}
