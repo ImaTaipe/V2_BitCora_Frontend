@@ -1,59 +1,109 @@
-<div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Préstamos</h2>
-    <div class="d-flex gap-2">
-      <button class="btn btn-danger" (click)="generarPdf()">📄 Exportar PDF</button>
-      <a routerLink="/prestamos/historial" class="btn btn-secondary">Historial</a>
-      <a routerLink="/prestamos/nuevo" class="btn btn-primary">Nuevo préstamo</a>
+<div class="tabla-container">
+  <div class="card vista-card">
+
+    <div class="vista-header">
+      <h2 class="perfil-title">Préstamos</h2>
+      <div class="header-actions">
+        <button class="btn-tabla-action btn-pdf" (click)="generarPdf()">Exportar PDF</button>
+        <a routerLink="/prestamos/historial" class="btn-tabla-action btn-neutral">Historial</a>
+        <a routerLink="/prestamos/nuevo" class="btn-tabla-action btn-principal">Nuevo préstamo</a>
+      </div>
     </div>
+
+    <div class="filters-row">
+      <div class="search-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="search-icon">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input 
+          type="text" 
+          class="search-input" 
+          placeholder="Buscar por libro o usuario..."
+          [ngModel]="textoBusqueda()"
+          (ngModelChange)="textoBusqueda.set($event)">
+      </div>
+
+      <div class="select-wrapper">
+        <select 
+          class="filter-select"
+          [ngModel]="filtroEstado()"
+          (ngModelChange)="filtroEstado.set($event)">
+          <option value="">Todos los Estados</option>
+          <option value="Pendiente">Pendiente</option>
+          <option value="Devuelto">Completado</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Libro</th>
+            <th>Usuario</th>
+            <th>Fecha Préstamo</th>
+            <th>Fecha Máxima</th>
+            <th>Estado</th>
+            <th>Alerta</th> 
+            <th class="text-center">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (prestamo of prestamosFiltrados(); track prestamo.id) {
+            <tr>
+              <td class="col-libro fw-semibold">{{ prestamo.libro }}</td>
+              <td class="col-usuario">{{ prestamo.usuario }}</td>
+              <td class="col-fecha">{{ prestamo.fechaPrestamo | date:'dd/MM/yyyy' }}</td>
+              <td class="col-fecha">{{ prestamo.fechaDevolucionMaxima | date:'dd/MM/yyyy' }}</td>
+              <td>
+                <span class="custom-badge"
+                      [class.badge-completado]="prestamo.estado === 'Devuelto'"
+                      [class.badge-pendiente]="prestamo.estado !== 'Devuelto'">
+                  {{ prestamo.estado === 'Devuelto' ? 'Completado' : 'Pendiente' }}
+                </span>
+              </td>
+              <td>
+                @if (prestamo.alerta === 'Vigente') {
+                  <span class="custom-badge badge-completado">Vigente</span>
+                }
+                @if (prestamo.alerta === 'Vence pronto') {
+                  <span class="custom-badge badge-vence-pronto">Vence pronto</span>
+                }
+                @if (prestamo.alerta === 'Vencido') {
+                  <span class="custom-badge badge-alerta">Vencido</span>
+                }
+                @if (prestamo.alerta === 'Devuelto') {
+                  <span class="custom-badge badge-neutral">Devuelto</span>
+                }
+              </td>
+              <td class="text-center">
+                @if (prestamo.estado !== 'Devuelto') {
+                  <button class="btn-icon-action btn-icon-devolver" (click)="devolver(prestamo.id)" title="Marcar como devuelto">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </button>
+                } @else {
+                  <span class="icon-static-devuelto" title="Devuelto correctamente">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M17 5 9.5 12.5 6 9"></path>
+                      <path d="m22 9-7.5 7.5L13 15"></path>
+                    </svg>
+                  </span>
+                }
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="7" class="text-center" style="padding: 2rem; color: #5A5873; font-style: italic;">
+                No se encontraron registros que coincidan con los filtros aplicados.
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
   </div>
-  <table class="table table-striped table-bordered">
-    <thead>
-      <tr>
-        <th>Libro</th>
-        <th>Usuario</th>
-        <th>Fecha Préstamo</th>
-        <th>Fecha Máxima</th>
-        <th>Estado</th>
-        <th>Alerta</th> 
-        <th>Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (prestamo of prestamos(); track prestamo.id) {
-        <tr>
-          <td>{{ prestamo.libro }}</td>
-          <td>{{ prestamo.usuario }}</td>
-          <td>{{ prestamo.fechaPrestamo | date:'dd/MM/yyyy' }}</td>
-          <td>{{ prestamo.fechaDevolucionMaxima | date:'dd/MM/yyyy' }}</td>
-          <td>
-            <span class="badge"
-                  [class.bg-success]="prestamo.estado === 'Devuelto'"
-                  [class.bg-warning]="prestamo.estado !== 'Devuelto'">
-              {{ prestamo.estado === 'Devuelto' ? 'Completado' : 'Pendiente' }}
-            </span>
-          </td>
-          <td>
-            @if (prestamo.alerta === 'Vigente') {
-              <span class="badge bg-success">Vigente</span>
-            }
-            @if (prestamo.alerta === 'Vence pronto') {
-              <span class="badge bg-warning text-dark">Vence pronto</span>
-            }
-            @if (prestamo.alerta === 'Vencido') {
-              <span class="badge bg-danger">Vencido</span>
-            }
-            @if (prestamo.alerta === 'Devuelto') {
-              <span class="badge bg-secondary">Devuelto</span>
-            }
-          </td>
-          <td>
-            @if (prestamo.estado !== 'Devuelto') {
-              <button class="btn btn-success btn-sm" (click)="devolver(prestamo.id)">Devolver</button>
-            }
-          </td>
-        </tr>
-      }
-    </tbody>
-  </table>
 </div>

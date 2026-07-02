@@ -82,6 +82,18 @@ export class Auth {
       ['/login']
     );
   }
+  cambiarPassword(
+  passwordActual: string,
+  passwordNueva: string
+) {
+  return this.http.put(
+    `${environment.apiUrl}/usuarios/cambiar-password`,
+    {
+      passwordActual,
+      passwordNueva
+    }
+  );
+}
 
   puedeGestionarPrestamos(): boolean {
 
@@ -108,5 +120,12 @@ esAdministrador(): boolean {
 
 esBibliotecario(): boolean {
   return this.getRol() === 'Bibliotecario';
-} 
+}
+
+register(data: any) {
+  return this.http.post<any>(
+    `${this.apiUrl}/register`,
+    data
+  );
+}
 }

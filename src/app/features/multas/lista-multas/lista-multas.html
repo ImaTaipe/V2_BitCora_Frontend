@@ -1,78 +1,139 @@
-<div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>Multas</h2>
-    <div class="d-flex gap-2">
-      <button class="btn btn-danger" (click)="generarPdf()">
-        📄 Exportar PDF
-      </button>
-      <button class="btn btn-primary" routerLink="/multas/nueva">
-        Nueva Multa
-      </button>
+<div class="tabla-container">
+  <div class="card vista-card">
+
+    <div class="vista-header">
+      <h2 class="perfil-title">Multas</h2>
+
+      <div class="header-actions">
+        <button class="btn-tabla-action btn-pdf" (click)="generarPdf()">
+  <i class="bi bi-file-earmark-pdf-fill me-2"></i>
+  Exportar PDF
+</button>
+
+        <button class="btn-tabla-action btn-principal" routerLink="/multas/nueva">
+          Nueva Multa
+        </button>
+      </div>
     </div>
+
+    <!-- Filtros -->
+    <div class="filtros-container">
+
+      <div class="campo">
+        <label>Buscar por usuario o libro</label>
+        <input
+          type="text"
+          class="custom-input"
+          [ngModel]="filtro()"
+          (ngModelChange)="filtro.set($event)"
+          placeholder="Escribe para buscar...">
+      </div>
+
+      <div class="campo">
+        <label>Desde fecha</label>
+        <input
+          type="date"
+          class="custom-input"
+          [ngModel]="desde()"
+          (ngModelChange)="desde.set($event)">
+      </div>
+
+      <div class="campo">
+        <label>Hasta fecha</label>
+        <input
+          type="date"
+          class="custom-input"
+          [ngModel]="hasta()"
+          (ngModelChange)="hasta.set($event)">
+      </div>
+
+    </div>
+
+    <div class="table-responsive">
+
+      <table class="custom-table">
+
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Libro</th>
+            <th>Monto</th>
+            <th>Motivo</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+            <th class="text-center">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          @for (multa of multasFiltradas(); track multa.id) {
+
+            <tr>
+
+              <td>{{ multa.usuario }}</td>
+
+              <td>{{ multa.libro }}</td>
+
+              <td>S/ {{ multa.monto }}</td>
+
+              <td>{{ multa.motivo }}</td>
+
+              <td>
+                @if (multa.estado === 'Pagada') {
+                  <span class="custom-badge badge-completado">
+                    Pagada
+                  </span>
+                } @else {
+                  <span class="custom-badge badge-alerta">
+                    Pendiente
+                  </span>
+                }
+              </td>
+
+              <td>{{ multa.fechaEmision | date:'dd/MM/yyyy' }}</td>
+
+              <td class="text-center">
+
+  @if (multa.estado === 'Pendiente') {
+    <button
+      class="btn-icon btn-success-icon me-2"
+      (click)="pagar(multa.id)"
+      title="Marcar como pagada">
+      <i class="bi bi-check-lg"></i>
+    </button>
+  } @else {
+    <span class="btn-placeholder me-2"></span>
+  }
+
+  @if (auth.esAdministrador()) {
+    <button
+      class="btn-icon btn-delete"
+      (click)="eliminar(multa.id)"
+      title="Eliminar">
+      <i class="bi bi-trash-fill"></i>
+    </button>
+  }
+
+</td>
+
+            </tr>
+
+          } @empty {
+
+            <tr>
+              <td colspan="7" class="text-center py-4">
+                No se encontraron multas registradas.
+              </td>
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
   </div>
-
-  <div class="row g-3 mb-4">
-    <div class="col-md-4">
-      <label class="form-label small fw-bold">Buscar por usuario o libro</label>
-      <input type="text" class="form-control" [ngModel]="filtro()" (ngModelChange)="filtro.set($event)" placeholder="Escribe para buscar...">
-    </div>
-    <div class="col-md-4">
-      <label class="form-label small fw-bold">Desde fecha</label>
-      <input type="date" class="form-control" [ngModel]="desde()" (ngModelChange)="desde.set($event)">
-    </div>
-    <div class="col-md-4">
-      <label class="form-label small fw-bold">Hasta fecha</label>
-      <input type="date" class="form-control" [ngModel]="hasta()" (ngModelChange)="hasta.set($event)">
-    </div>
-  </div>
-
-  <table class="table table-bordered table-striped shadow-sm">
-    <thead>
-      <tr>
-        <th>Usuario</th>
-        <th>Libro</th> 
-        <th>Monto</th>
-        <th>Motivo</th>
-        <th>Estado</th>
-        <th>Fecha</th>
-        <th style="width: 160px;">Acciones</th> </tr>
-    </thead>
-    <tbody>
-      @for (multa of multasFiltradas(); track multa.id) {
-        <tr>
-          <td>{{ multa.usuario }}</td>
-          <td>{{ multa.libro }}</td>
-          <td>S/ {{ multa.monto }}</td>
-          <td>{{ multa.motivo }}</td>
-          <td>
-            <span class="badge" [class.bg-danger]="multa.estado === 'Pendiente'" [class.bg-success]="multa.estado === 'Pagada'">
-              {{ multa.estado }}
-            </span>
-          </td>
-          <td>{{ multa.fechaEmision | date:'dd/MM/yyyy' }}</td>
-          <td>
-            <div class="d-flex gap-2 align-items-center">
-              
-              @if (multa.estado === 'Pendiente') {
-                <button class="btn btn-success btn-sm" (click)="pagar(multa.id)">Pagar</button>
-              } @else {
-                <div style="width: 53px;"></div> 
-              }
-
-              @if (auth.esAdministrador()) {
-                <button class="btn btn-danger btn-sm" (click)="eliminar(multa.id)">Eliminar</button>
-              }
-
-            </div>
-          </td>
-        </tr>
-      } @empty {
-        <tr>
-          <td colspan="7" class="text-center text-muted py-3">
-            No se encontraron multas registradas bajo este criterio de búsqueda.
-          </td>
-        </tr>
-      }
-    </tbody>
-  </table>
 </div>

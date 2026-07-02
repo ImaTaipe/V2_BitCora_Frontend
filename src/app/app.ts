@@ -27,7 +27,7 @@ export class App {
       .subscribe(() => {
 
         this.mostrarNavbar =
-          this.router.url !== '/login';
+          this.router.url !== '/login'&& this.router.url !== '/register';
 
       });
 

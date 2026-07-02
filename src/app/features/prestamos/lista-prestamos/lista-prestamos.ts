@@ -1,5 +1,6 @@
-import { Component, signal, OnInit } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common'; // 📄 Importamos DatePipe
+import { Component, signal, OnInit, computed } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms'; 
 import { Prestamos } from '../../../core/services/prestamos';
 import { RouterLink } from '@angular/router';
 import { Auth } from '../../../core/services/auth';
@@ -8,7 +9,8 @@ import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-lista-prestamos',
-  imports: [CommonModule, RouterLink],
+  standalone: true,
+  imports: [CommonModule, RouterLink, FormsModule],
   providers: [DatePipe],
   templateUrl: './lista-prestamos.html',
   styleUrl: './lista-prestamos.css',
@@ -16,6 +18,36 @@ import autoTable from 'jspdf-autotable';
 export class ListaPrestamos implements OnInit {
 
   prestamos = signal<any[]>([]);
+  
+  // 🔍 Señales limpias para los criterios de filtrado
+  textoBusqueda = signal('');
+  filtroEstado = signal('');
+
+  // ⚙️ SEÑAL COMPUTADA: Filtra combinando texto y estado (Lógica inversa para Pendientes)
+prestamosFiltrados = computed(() => {
+  let resultado = this.prestamos();
+  const busqueda = this.textoBusqueda().toLowerCase().trim();
+  const estado = this.filtroEstado();
+
+  // 1. Filtrar por buscador escrito (Libro o Usuario)
+  if (busqueda) {
+    resultado = resultado.filter(p => 
+      p.libro?.toLowerCase().includes(busqueda) ||
+      p.usuario?.toLowerCase().includes(busqueda)
+    );
+  }
+
+  // 2. Filtrar por Selector de Estado (Si es 'Devuelto' busca iguales, si es 'Pendiente' busca los contrarios)
+  if (estado) {
+    if (estado === 'Devuelto') {
+      resultado = resultado.filter(p => p.estado === 'Devuelto');
+    } else if (estado === 'Pendiente') {
+      resultado = resultado.filter(p => p.estado !== 'Devuelto');
+    }
+  }
+
+  return resultado;
+});
 
   constructor(
     private prestamosService: Prestamos,
@@ -46,70 +78,70 @@ export class ListaPrestamos implements OnInit {
   }
 
   generarPdf() {
-  const doc = new jsPDF();
-  const ahora = new Date();
-  const fechaImpresion = ahora.toLocaleDateString('es-PE', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
-  });
-  const horaImpresion = ahora.toLocaleTimeString('es-PE', {
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'
-  });
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(22);
-  doc.setTextColor(44, 62, 80);
-  doc.text('BitCoraPerú', 14, 18);
+    const doc = new jsPDF();
+    const ahora = new Date();
+    const fechaImpresion = ahora.toLocaleDateString('es-PE', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+    const horaImpresion = ahora.toLocaleTimeString('es-PE', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+    
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(22);
+    doc.setTextColor(44, 62, 80);
+    doc.text('BitCoraPerú', 14, 18);
 
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(10);
-  doc.setTextColor(127, 140, 141);
-  doc.text('Gestor de Biblioteca Automático', 14, 24);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.setTextColor(127, 140, 141);
+    doc.text('Gestor de Biblioteca Automático', 14, 24);
 
-  doc.setFontSize(9);
-  doc.text(`Fecha: ${fechaImpresion}`, 196, 18, { align: 'right' });
-  doc.text(`Hora: ${horaImpresion}`, 196, 24, { align: 'right' });
+    doc.setFontSize(9);
+    doc.text(`Fecha: ${fechaImpresion}`, 196, 18, { align: 'right' });
+    doc.text(`Hora: ${horaImpresion}`, 196, 24, { align: 'right' });
 
-  doc.setDrawColor(231, 76, 60);
-  doc.setLineWidth(1);
-  doc.line(14, 28, 196, 28);
+    doc.setDrawColor(231, 76, 60);
+    doc.setLineWidth(1);
+    doc.line(14, 28, 196, 28);
 
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(14);
-  doc.setTextColor(52, 73, 94);
-  doc.text('REPORTE GENERAL DE PRÉSTAMOS ACTIVOS', 14, 38);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(14);
+    doc.setTextColor(52, 73, 94);
+    
+    doc.text('REPORTE DE PRÉSTAMOS (VISTA ACTUAL)', 14, 38);
 
-  autoTable(doc, {
-    startY: 43,
-    head: [[
-      'Libro', 
-      'Usuario', 
-      'F. Préstamo', 
-      'F. Máxima', 
-      'Estado', 
-      'Alerta'
-    ]],
-    body: this.prestamos().map(p => [
-      p.libro,
-      p.usuario,
-      this.datePipe.transform(p.fechaPrestamo, 'dd/MM/yyyy') || '',
-      this.datePipe.transform(p.fechaDevolucionMaxima, 'dd/MM/yyyy') || '',
-      p.estado,
-      p.alerta || 'Vigente'
-    ]),
-    headStyles: {
-      fillColor: [44, 62, 80],
-      textColor: [255, 255, 255],
-      fontStyle: 'bold'
-    },
-    alternateRowStyles: {
-      fillColor: [248, 249, 250]
-    },
-    margin: { top: 43, left: 14, right: 14 }
-  });
+    autoTable(doc, {
+      startY: 43,
+      head: [[
+        'Libro', 
+        'Usuario', 
+        'F. Préstamo', 
+        'F. Máxima', 
+        'Estado'
+      ]],
+      body: this.prestamosFiltrados().map(p => [
+        p.libro,
+        p.usuario,
+        this.datePipe.transform(p.fechaPrestamo, 'dd/MM/yyyy') || '',
+        this.datePipe.transform(p.fechaDevolucionMaxima, 'dd/MM/yyyy') || '',
+        p.estado === 'Devuelto' ? 'Completado' : 'Pendiente'
+      ]),
+      headStyles: {
+        fillColor: [44, 62, 80],
+        textColor: [255, 255, 255],
+        fontStyle: 'bold'
+      },
+      alternateRowStyles: {
+        fillColor: [248, 249, 250]
+      },
+      margin: { top: 43, left: 14, right: 14 }
+    });
 
-  doc.save(`reporte-prestamos-${fechaImpresion.replace(/\//g, '-')}.pdf`);
-}
+    doc.save(`reporte-prestamos-${fechaImpresion.replace(/\//g, '-')}.pdf`);
+  }
 }

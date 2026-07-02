@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { Login } from './features/auth/login/login';
 
 import { authGuard } from './core/guards/auth-guard';
-import { DashboardComponent } from './features/dashboard/dashboard/dashboard';
+import { Dashboard } from './features/dashboard/dashboard/dashboard';
 import { Catalogo } from './features/libros/catalogo/catalogo';
 import { NuevoLibro } from './features/libros/nuevo-libro/nuevo-libro';
 import { EditarLibro } from './features/libros/editar-libro/editar-libro';
@@ -17,6 +17,9 @@ import { NuevaMulta } from './features/multas/nueva-multa/nueva-multa';
 import { HistorialPrestamos } from './features/prestamos/historial-prestamos/historial-prestamos';
 import { NuevaResena } from './features/resenas/nueva-resena/nueva-resena';
 import { ListaResenas } from './features/resenas/lista-resenas/lista-resenas';
+import { bibliotecarioGuard } from './core/guards/bibliotecario-guard';
+import { Register } from './features/auth/register/register';
+import { Perfil } from './features/usuarios/perfil/perfil';
 
 
 
@@ -31,10 +34,14 @@ export const routes: Routes = [
     path: 'login',
     component: Login
   },
+  {
+  path: 'register',
+  component: Register
+  },
 
   {
     path: 'dashboard',
-    component: DashboardComponent,
+    component: Dashboard,
     canActivate: [authGuard]
   },
 
@@ -59,49 +66,49 @@ export const routes: Routes = [
     {
     path: 'prestamos',
     component: ListaPrestamos,
-    canActivate: [authGuard]
+    canActivate: [authGuard,bibliotecarioGuard]
   },
 
   {
     path: 'prestamos/nuevo',
     component: NuevoPrestamo,
-    canActivate: [authGuard]
+    canActivate: [authGuard, bibliotecarioGuard]
   },
 
   {
     path: 'usuarios',
     component: ListaUsuarios,
-    canActivate: [authGuard]
+    canActivate: [authGuard,adminGuard]
   },
 
   {
     path: 'usuarios/nuevo',
     component: NuevoUsuario,
-    canActivate: [authGuard]
+    canActivate: [authGuard,adminGuard]
   },
 
   {
     path: 'usuarios/editar/:id',
     component: EditarUsuario,
-    canActivate: [authGuard]
+    canActivate: [authGuard,adminGuard]
   },
 
   {
     path: 'multas',
     component: ListaMultas,
-    canActivate: [authGuard]
+    canActivate: [authGuard,bibliotecarioGuard]
   },
 
   {
     path: 'multas/nueva',
     component: NuevaMulta,
-    canActivate: [authGuard]
+    canActivate: [authGuard,bibliotecarioGuard]
   },
 
   {
     path: 'prestamos/historial',
     component: HistorialPrestamos,
-    canActivate: [authGuard]
+    canActivate: [authGuard,bibliotecarioGuard]
   },
   {
   path: 'resenas',
@@ -111,7 +118,11 @@ export const routes: Routes = [
     path: 'resenas/nueva',
     component: NuevaResena
   },
-
+  {
+  path: 'perfil',
+  component: Perfil,
+  canActivate: [authGuard]
+},
   {
     path: '**',
     redirectTo: 'login'

@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #F6F5F9;
+  --text: #1E1F2C;
+  --text-soft: #4E4C67;
+  --border: #E2DFEE;
+}
+
+.tabla-container {
+  min-height: 80vh;
+  background: var(--bg);
+  padding: 2.5rem;
+  display: flex;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+}
+
+.vista-card {
+  width: 100%;
+  max-width: 1400px;
+  background: white;
+  border-radius: 28px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+.vista-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.perfil-title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.header-actions {
+  display: flex;
+  gap: .8rem;
+}
+
+.btn-tabla-action {
+  border: none;
+  border-radius: 14px;
+  padding: .8rem 1.4rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.btn-principal {
+  background: #1D4ED8;
+  color: #fff;
+}
+
+.btn-principal:hover {
+  background: #1E40AF;
+}
+
+.btn-delete {
+  background: #FDDEDE;
+  color: #A62626;
+}
+
+.btn-delete:hover {
+  background: #FBC5C5;
+}
+
+.filtros-container {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.campo label {
+  display: block;
+  margin-bottom: .5rem;
+  font-weight: 600;
+}
+
+.custom-input {
+  width: 100%;
+  padding: .8rem 1rem;
+  border-radius: 12px;
+  border: 1px solid #DAD7E7;
+  outline: none;
+  transition: .2s;
+}
+
+.custom-input:focus {
+  border-color: #2563EB;
+  box-shadow: 0 0 0 4px rgba(37,99,235,.20);
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.custom-table th {
+  background: #F9F9FC;
+  padding: 1rem;
+  border-bottom: 3px solid #E2DFEE;
+  font-weight: 700;
+}
+
+.custom-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #E2DFEE;
+}
+
+.custom-table tbody tr:hover {
+  background: #F7F6FA;
+}
+
+.custom-badge {
+  display: inline-block;
+  padding: .45rem .9rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: .85rem;
+}
+
+.badge-completado {
+  background: #D4EDDA;
+  color: #155724;
+}
+
+.badge-alerta {
+  background: #F8D7DA;
+  color: #721C24;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.btn-icon {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: .2s;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+}
+
+.btn-success-icon {
+  background: #2E7D32;
+  color: white;
+}
+
+.btn-success-icon:hover {
+  background: #16A34A;
+}
+
+.btn-delete {
+  background: #EF4444;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #DC2626;
+}
+
+@media (max-width: 900px) {
+  .filtros-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.btn-pdf {
+  background: #DC2626;
+  color: white;
+}
+
+.btn-pdf:hover {
+  background: #B91C1C;
+}
+
+.btn-placeholder {
+  display: inline-block;
+  width: 42px;
+  height: 42px;
+  vertical-align: middle;
+}

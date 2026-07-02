@@ -14,7 +14,7 @@ export class EditarLibro implements OnInit {
 
   libro: any = null; 
   imagen: File | null = null;
-  imagenPreview: string | null = null; // 👈 Variable para guardar la vista previa temporal
+  imagenPreview: string | null = null;
   id!: number;
 
   constructor(
@@ -83,58 +83,3 @@ export class EditarLibro implements OnInit {
     });
 }
 }
-
-
-
-
-// import { Component, OnInit, signal } from '@angular/core';
-// import { FormsModule } from '@angular/forms';
-// import { CommonModule } from '@angular/common';
-// import { LibrosService } from '../../../core/services/libros';
-// import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-
-// @Component({
-//   selector: 'app-editar-libro',
-//   imports: [CommonModule, FormsModule, RouterModule],
-//   templateUrl: './editar-libro.html',
-//   styleUrl: './editar-libro.css',
-// })
-// export class EditarLibro implements OnInit {
-
-//   libro: any = {};
-//   imagen: File | null = null;
-//   id!: number;
-
-//   constructor(
-//     private route: ActivatedRoute,
-//     private librosService: LibrosService,
-//     private router: Router
-//   ) {}
-
-//   ngOnInit(): void {
-//     this.id = Number(this.route.snapshot.paramMap.get('id'));
-
-//     this.librosService.getLibro(this.id)
-//       .subscribe(data => {
-//         this.libro = data;
-//       });
-//   }
-
-//   onFileChange(event: any) {
-//     this.imagen = event.target.files[0];
-//   }
-
-//   guardar() {
-//     this.librosService.editarLibro(this.id, {
-//       ...this.libro,
-//       imagen: this.imagen
-//     }).subscribe(() => {
-//       alert('Libro actualizado');
-//       this.router.navigate(['/libros']);
-//     });
-//   }
-// }
-
-
-
-// //////OFICIAL

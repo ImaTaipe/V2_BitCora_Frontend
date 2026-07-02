@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Usuarios } from '../../../core/services/usuarios';
 
 
 @Component({
   selector: 'app-editar-usuario',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './editar-usuario.html',
   styleUrl: './editar-usuario.css',
 })
@@ -16,6 +16,7 @@ implements OnInit {
   id = 0;
 
   usuario: any = {
+    id: 0,
     nombreCompleto: '',
     correo: '',
     rol: '',
@@ -25,27 +26,30 @@ implements OnInit {
   };
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private usuariosService: Usuarios
-  ) {}
+  private route: ActivatedRoute,
+  private router: Router,
+  private usuariosService: Usuarios,
+  private cdr: ChangeDetectorRef
+) {}
 
   ngOnInit(): void {
 
-    this.id =
-      Number(
-        this.route.snapshot.paramMap.get('id')
-      );
+    this.id = Number(
+      this.route.snapshot.paramMap.get('id')
+    );
 
     this.usuariosService
-      .getById(this.id)
-      .subscribe(data => {
+  .getById(this.id)
+  .subscribe(data => {
 
-        this.usuario = data;
+    this.usuario = data;
 
-      });
+    this.cdr.detectChanges();
+
+  });
 
   }
+
 
   guardar() {
 
@@ -62,6 +66,7 @@ implements OnInit {
 
       return;
     }
+
 
     this.usuariosService
       .update(

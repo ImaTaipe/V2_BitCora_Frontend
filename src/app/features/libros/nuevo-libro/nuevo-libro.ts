@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core'; // 💡 Importado ChangeDetectorRef
 import { FormsModule } from '@angular/forms';
 import { LibrosService } from '../../../core/services/libros';
 import { RouterLink, Router } from '@angular/router';
@@ -24,13 +24,32 @@ export class NuevoLibro {
   };
 
   imagen: File | null = null;
+  imagenPreview: string | null = null; // Variable para almacenar el base64 de la imagen
+
   constructor(
     private librosService: LibrosService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef // 💡 Inyectado en el constructor
   ) {}
 
   onFileChange(event: any) {
-    this.imagen = event.target.files[0];
+    const file = event.target.files[0];
+    
+    if (file) {
+      this.imagen = file;
+
+      // 💡 Generar la vista previa en tiempo real
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagenPreview = reader.result as string; 
+        this.cdr.detectChanges(); // ✨ Forzamos a Angular a redibujar el DOM con la nueva previsualización
+      };
+      reader.readAsDataURL(file);
+    } else {
+      this.imagen = null;
+      this.imagenPreview = null;
+      this.cdr.detectChanges();
+    }
   }
 
   guardar() {

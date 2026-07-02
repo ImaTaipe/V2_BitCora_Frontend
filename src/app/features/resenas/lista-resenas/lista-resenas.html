@@ -1,55 +1,111 @@
-<div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>Reseñas</h2>
-  </div>
-  <div class="row g-3 mb-4">
-    <div class="col-md-4">
-      <label class="form-label small fw-bold">Buscar por usuario o libro</label>
-      <input type="text" class="form-control" [ngModel]="filtro()" (ngModelChange)="filtro.set($event)" placeholder="Escribe para buscar...">
+<div class="tabla-container">
+  <div class="card vista-card">
+
+    <div class="vista-header">
+      <h2 class="perfil-title">Reseñas</h2>
     </div>
-    <div class="col-md-4">
-      <label class="form-label small fw-bold">Desde fecha</label>
-      <input type="date" class="form-control" [ngModel]="desde()" (ngModelChange)="desde.set($event)">
+
+    <div class="filtros-container">
+
+      <div class="campo">
+        <label>Buscar por usuario o libro</label>
+        <input
+          type="text"
+          class="custom-input"
+          [ngModel]="filtro()"
+          (ngModelChange)="filtro.set($event)"
+          placeholder="Escribe para buscar...">
+      </div>
+
+      <div class="campo">
+        <label>Desde fecha</label>
+        <input
+          type="date"
+          class="custom-input"
+          [ngModel]="desde()"
+          (ngModelChange)="desde.set($event)">
+      </div>
+
+      <div class="campo">
+        <label>Fecha específica</label>
+        <input
+          type="date"
+          class="custom-input"
+          [ngModel]="especifica()"
+          (ngModelChange)="especifica.set($event)">
+      </div>
+
     </div>
-    <div class="col-md-4">
-      <label class="form-label small fw-bold">Fecha específica</label>
-      <input type="date" class="form-control" [ngModel]="especifica()" (ngModelChange)="especifica.set($event)">
-    </div>
-  </div>
-  <table class="table table-bordered table-striped shadow-sm">
-    <thead>
-      <tr>
-        <th>Libro</th>
-        <th>Usuario</th>
-        <th>Estrellas</th>
-        <th>Comentario</th>
-        <th>Fecha</th>
-        @if(auth.esAdministrador()) {
-          <th>Acciones</th>
-        }
-      </tr>
-    </thead>
-    <tbody>
-      @for (r of resenasFiltradas(); track r.id) {
-        <tr>
-          <td>{{ r.libro }}</td>
-          <td>{{ r.usuario }}</td>
-          <td>{{ r.estrellas }} ⭐</td>
-          <td>{{ r.comentario }}</td>
-          <td>{{ r.fecha | date:'dd/MM/yyyy' }}</td>
-          @if(auth.esAdministrador()) {
-            <td>
-              <button class="btn btn-danger btn-sm" (click)="eliminar(r.id)">Eliminar</button>
-            </td>
+
+    <div class="table-responsive">
+
+      <table class="custom-table">
+
+        <thead>
+          <tr>
+            <th>Libro</th>
+            <th>Usuario</th>
+            <th>Estrellas</th>
+            <th>Comentario</th>
+            <th>Fecha</th>
+
+            @if(auth.esAdministrador()) {
+              <th class="text-center">Acciones</th>
+            }
+          </tr>
+        </thead>
+
+        <tbody>
+
+          @for (r of resenasFiltradas(); track r.id) {
+
+            <tr>
+
+              <td>{{ r.libro }}</td>
+
+              <td>{{ r.usuario }}</td>
+
+              <td>
+                <span class="badge-estrellas">
+                  {{ r.estrellas }} ★
+                </span>
+              </td>
+
+              <td>{{ r.comentario }}</td>
+
+              <td>{{ r.fecha | date:'dd/MM/yyyy' }}</td>
+
+              @if(auth.esAdministrador()) {
+                <td class="text-center">
+                  <button
+                    class="btn-icon btn-delete"
+                    (click)="eliminar(r.id)"
+                    title="Eliminar">
+
+                    <i class="bi bi-trash-fill"></i>
+                  </button>
+                </td>
+              }
+
+            </tr>
+
+          } @empty {
+
+            <tr>
+              <td
+                [attr.colspan]="auth.esAdministrador() ? 6 : 5"
+                class="text-center py-4">
+                No se encontraron reseñas registradas bajo este criterio de búsqueda.
+              </td>
+            </tr>
+
           }
-        </tr>
-      } @empty {
-        <tr>
-          <td [attr.colspan]="auth.esAdministrador() ? 6 : 5" class="text-center text-muted py-3">
-            No se encontraron reseñas registradas bajo este criterio de búsqueda.
-          </td>
-        </tr>
-      }
-    </tbody>
-  </table>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
 </div>

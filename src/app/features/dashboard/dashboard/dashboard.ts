@@ -1,31 +1,19 @@
-import {
-  Component,
-  signal,
-  OnInit,
-  AfterViewInit,
-  ElementRef,
-  ViewChild
-} from '@angular/core';
-
+import {Component,signal,OnInit,AfterViewInit,ElementRef,ViewChild} from '@angular/core';
 import { Chart, registerables } from 'chart.js';
-
-Chart.register(...registerables);
 import { dashboardService } from '../../../core/services/dashboard';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Resenas } from '../../../core/services/resenas';
 import { FormsModule } from '@angular/forms';
+Chart.register(...registerables);
 
 @Component({
-  selector: 'app-dashboard',imports: [
-  CommonModule,
-  RouterLink,
-  FormsModule
+  selector: 'app-dashboard',imports: [CommonModule,RouterLink,FormsModule
 ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class Dashboard implements OnInit, AfterViewInit {
   rol = signal('');
   admin = signal<any>(null);
   bibliotecario = signal<any>(null);
@@ -214,4 +202,5 @@ obtenerImagen(url?: string) {
     if (url.startsWith('http')) return url;
     return `https://localhost:7220${url}`;
   }
+  
 }

@@ -4,11 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { Prestamos } from '../../../core/services/prestamos';
 import { Usuarios } from '../../../core/services/usuarios';
 import { Multas } from '../../../core/services/multas';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-nueva-multa',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './nueva-multa.html',
   styleUrl: './nueva-multa.css',
 })
@@ -26,7 +26,16 @@ export class NuevaMulta implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.usuariosService.getAll().subscribe(data => this.usuarios.set(data));
+    this.usuariosService
+  .getAll()
+  .subscribe(data => {
+
+    const lectores = data.filter(
+      (u: any) => u.rol === 'Lector'
+    );
+
+    this.usuarios.set(lectores);
+  });
   }
 
   onUsuarioChange() {

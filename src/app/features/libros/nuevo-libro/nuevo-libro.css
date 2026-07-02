@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #F6F5F9;
+  --text: #2C2E3E;
+  --accent: #40405C;
+  --border: #ECEAF4;
+}
+
+.perfil-container {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg);
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.perfil-card {
+  width: 100%;
+  max-width: 550px;
+  background: white;
+  border-radius: 28px;
+  padding: 2.5rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,.06);
+  border: none;
+}
+
+.perfil-header {
+  margin-bottom: 2rem;
+}
+
+.perfil-title {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: .5rem;
+  font-weight: 500;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: .9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  outline: none;
+  transition: .2s;
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background-color: #fff;
+}
+
+.form-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(64,64,92,.08);
+}
+
+.actions-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn-modern {
+  flex: 1;
+  background: #40405C;
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: .9rem 1.3rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.btn-modern:hover {
+  background: #2C2E3E;
+}
+
+/* Contenedor y dimensiones de la imagen de vista previa */
+.preview-wrapper {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.preview-img {
+  height: 200px;
+  max-width: 150px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px rgba(0,0,0,.06);
+}
+
+/* Botón Guardar Verde */
+.btn-modern.btn-guardar-verde {
+  background: #2E7D32;
+}
+
+.btn-modern.btn-guardar-verde:hover {
+  background: #1B5E20;
+}
+
+/* Botón Cancelar con tonos grises del proyecto */
+.btn-modern.btn-cancelar {
+  background: #ECEAF4;
+  color: #40405C;
+}
+
+.btn-modern.btn-cancelar:hover {
+  background: #DCD9E8;
+}
+
+.error-text {
+  color: #B64141; /* Mismo tono de rojo que usas en el login */
+  font-size: 0.85rem;
+  margin-top: 0.4rem;
+  font-weight: 500;
+}

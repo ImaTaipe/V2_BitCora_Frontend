@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body, .container {
+  font-family: 'Inter', sans-serif;
+  color: #1E1F2C;
+}
+
+h2 {
+  font-weight: 700;
+  color: #1E1F2C;
+  font-size: 1.8rem;
+}
+
+hr {
+  border-top: 1px solid #E2DFEE;
+  opacity: 1;
+  margin-bottom: 2rem;
+}
+
+.form-control {
+  border: 2px solid #E2DFEE;
+  border-radius: 14px;
+  padding: 0.75rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  background-color: #FCFCFE;
+  transition: all 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: #2A43C1;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(42, 67, 193, 0.12);
+  color: #1E1F2C;
+}
+
+.card {
+  border: 1px solid #E2DFEE !important;
+  border-radius: 20px !important;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06) !important;
+}
+
+.card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1E1F2C;
+  margin-bottom: 0.75rem;
+}
+
+.card-text {
+  font-size: 0.9rem;
+  color: #4E4C67;
+  margin-bottom: 0.5rem;
+}
+
+.btn {
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn-sm {
+  padding: 0.5rem 0.9rem;
+  font-size: 0.825rem;
+  border-radius: 10px;
+}
+
+.btn-primary {
+  background-color: #2A43C1;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #1C2E8E;
+}
+
+.btn-danger {
+  background-color: #A62626;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #821D1D;
+}
+
+.btn-warning {
+  background-color: #E8EBFB;
+  color: #2A43C1;
+}
+
+.btn-warning:hover {
+  background-color: #D3D9F7;
+  color: #1C2E8E;
+}
+
+.card-body .btn-danger {
+  background-color: #FFE7E7;
+  color: #B64141;
+  border: 1px solid #F3D2D2;
+}
+
+.card-body .btn-danger:hover {
+  background-color: #FCD6D6;
+  color: #9E3232;
+}
+
+.text-warning {
+  color: #FFB300 !important;
+  letter-spacing: -1px;
+}
+
+.text-muted, .text-secondary {
+  color: #4E4C67 !important;
+  font-size: 0.8rem;
+}
+

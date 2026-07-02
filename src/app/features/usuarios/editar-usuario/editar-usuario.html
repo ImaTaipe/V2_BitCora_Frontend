@@ -1,58 +1,237 @@
-<div class="container mt-4">
-  <h2>
-    Editar Usuario
-  </h2>
-  <form
-    (ngSubmit)="guardar()">
-    <input
-      class="form-control mb-3"
-      [(ngModel)]="usuario.nombreCompleto"
-      name="nombreCompleto"
-      required>
-    <input
-      class="form-control mb-3"
-      [(ngModel)]="usuario.correo"
-      name="correo"
-      required>
-    <select
-      class="form-select mb-3"
-      [(ngModel)]="usuario.rol"
-      name="rol"
-      required>
-      <option value="Administrador">
-        Administrador
-      </option>
-      <option value="Bibliotecario">
-        Bibliotecario
-      </option>
-      <option value="Lector">
-        Lector
-      </option>
-    </select>
-    <input
-      class="form-control mb-3"
-      [(ngModel)]="usuario.telefono"
-      name="telefono"
-      required>
-    <input
-      class="form-control mb-3"
-      [(ngModel)]="usuario.direccion"
-      name="direccion"
-      required>
-    <div class="form-check mb-3">
-      <input
-        type="checkbox"
-        class="form-check-input"
-        [(ngModel)]="usuario.estado"
-        name="estado">
-      <label
-        class="form-check-label">
-        Usuario activo
-      </label>
+<div class="perfil-container">
+
+  <div class="card perfil-card">
+
+    <div class="perfil-header">
+      <h2 class="perfil-title">
+        Editar Usuario
+      </h2>
     </div>
-    <button
-      class="btn btn-success">
-      Guardar Cambios
-    </button>
-  </form>
+
+
+    <form #formEditar="ngForm" (ngSubmit)="guardar()">
+
+
+      <!-- Nombre -->
+      <div class="form-group">
+
+        <label class="form-label">
+          Nombre Completo
+        </label>
+
+        <input
+          class="form-input"
+          [(ngModel)]="usuario.nombreCompleto"
+          name="nombreCompleto"
+          #nombreInput="ngModel"
+          required>
+
+        @if (nombreInput.invalid && (nombreInput.dirty || nombreInput.touched)) {
+          <div class="error-text">
+            El nombre es obligatorio.
+          </div>
+        }
+
+      </div>
+
+
+
+      <!-- Correo -->
+      <div class="form-group">
+
+        <label class="form-label">
+          Correo
+        </label>
+
+        <input
+          type="email"
+          class="form-input"
+          [(ngModel)]="usuario.correo"
+          name="correo"
+          #correoInput="ngModel"
+          required
+          email>
+
+        @if (correoInput.invalid && (correoInput.dirty || correoInput.touched)) {
+          <div class="error-text">
+            El correo es obligatorio y debe ser válido.
+          </div>
+        }
+
+      </div>
+
+
+
+
+      <!-- Rol -->
+      <div class="form-group">
+
+        <label class="form-label">
+          Rol
+        </label>
+
+        <select
+          class="form-input"
+          [(ngModel)]="usuario.rol"
+          name="rol"
+          #rolInput="ngModel"
+          required>
+
+
+          <option value="">
+            Seleccione un rol
+          </option>
+
+
+          <option value="Administrador">
+            Administrador
+          </option>
+
+
+          <option value="Bibliotecario">
+            Bibliotecario
+          </option>
+
+
+          <option value="Lector">
+            Lector
+          </option>
+
+
+        </select>
+
+
+        @if (rolInput.invalid && (rolInput.dirty || rolInput.touched)) {
+
+          <div class="error-text">
+            Seleccione un rol.
+          </div>
+
+        }
+
+      </div>
+
+
+
+
+      <!-- Teléfono -->
+      <div class="form-group">
+
+        <label class="form-label">
+          Teléfono
+        </label>
+
+
+        <input
+          class="form-input"
+          [(ngModel)]="usuario.telefono"
+          name="telefono"
+          #telefonoInput="ngModel"
+          required>
+
+
+        @if (telefonoInput.invalid && (telefonoInput.dirty || telefonoInput.touched)) {
+
+          <div class="error-text">
+            El teléfono es obligatorio.
+          </div>
+
+        }
+
+      </div>
+
+
+
+
+      <!-- Dirección -->
+      <div class="form-group">
+
+        <label class="form-label">
+          Dirección
+        </label>
+
+
+        <input
+          class="form-input"
+          [(ngModel)]="usuario.direccion"
+          name="direccion"
+          #direccionInput="ngModel"
+          required>
+
+
+        @if (direccionInput.invalid && (direccionInput.dirty || direccionInput.touched)) {
+
+          <div class="error-text">
+            La dirección es obligatoria.
+          </div>
+
+        }
+
+      </div>
+
+
+
+
+      <!-- Estado -->
+      <div class="form-group">
+
+        <label class="form-label">
+          Estado
+        </label>
+
+
+        <div>
+
+          <input
+            type="checkbox"
+            [(ngModel)]="usuario.estado"
+            name="estado">
+
+
+          <span style="margin-left:8px;">
+            Usuario activo
+          </span>
+
+        </div>
+
+      </div>
+
+
+
+
+      <!-- Botones -->
+      <div class="actions-container">
+
+
+        <button
+          type="button"
+          class="btn-modern btn-cancelar"
+          routerLink="/usuarios">
+
+          Cancelar
+
+        </button>
+
+
+
+        <button
+          type="submit"
+          class="btn-modern btn-guardar-verde"
+          [disabled]="formEditar.invalid">
+
+          Guardar Cambios
+
+        </button>
+
+
+      </div>
+
+
+
+    </form>
+
+
+  </div>
+
+
 </div>

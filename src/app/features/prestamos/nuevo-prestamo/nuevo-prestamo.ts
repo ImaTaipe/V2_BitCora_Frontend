@@ -33,7 +33,16 @@ implements OnInit {
 
   ngOnInit(): void {
 
-  this.usuariosService .getAll() .subscribe(data => { this.usuarios.set(data);});
+  this.usuariosService
+  .getAll()
+  .subscribe(data => {
+
+    const lectores = data.filter(
+      (u: any) => u.rol === 'Lector'
+    );
+
+    this.usuarios.set(lectores);
+  });
 
   this.librosService .getAll() .subscribe(data => { this.libros.set(data); });
 

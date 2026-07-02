@@ -1,52 +1,80 @@
-<div class="container mt-4">
-  <h2>
-    Nuevo Usuario
-  </h2>
-  <form
-    (ngSubmit)="guardar()">
-    <input
-      class="form-control mb-3"
-      placeholder="Nombre Completo"
-      [(ngModel)]="usuario.nombreCompleto"
-      name="nombreCompleto">
-    <input
-      class="form-control mb-3"
-      placeholder="Correo"
-      [(ngModel)]="usuario.correo"
-      name="correo">
-    <input
-      type="password"
-      class="form-control mb-3"
-      placeholder="Contraseña"
-      [(ngModel)]="usuario.password"
-      name="password">
-    <select
-      class="form-select mb-3"
-      [(ngModel)]="usuario.rol"
-      name="rol">
-      <option value="Administrador">
-        Administrador
-      </option>
-      <option value="Bibliotecario">
-        Bibliotecario
-      </option>
-      <option value="Lector">
-        Lector
-      </option>
-    </select>
-    <input
-      class="form-control mb-3"
-      placeholder="Teléfono"
-      [(ngModel)]="usuario.telefono"
-      name="telefono">
-    <input
-      class="form-control mb-3"
-      placeholder="Dirección"
-      [(ngModel)]="usuario.direccion"
-      name="direccion">
-    <button
-      class="btn btn-success">
-      Guardar
-    </button>
-  </form>
+<div class="perfil-container">
+
+  <div class="card perfil-card">
+
+    <div class="perfil-header">
+      <h2 class="perfil-title">Nuevo Usuario</h2>
+    </div>
+
+    <form (ngSubmit)="guardar()">
+      
+      <div class="form-group">
+        <label class="form-label">Nombre Completo</label>
+        <input
+          type="text"
+          class="form-input"
+          placeholder="Ej. Juan Pérez"
+          [(ngModel)]="usuario.nombreCompleto"
+          name="nombreCompleto">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Correo electrónico</label>
+        <input
+          type="email"
+          class="form-input"
+          placeholder="ejemplo@correo.com"
+          [(ngModel)]="usuario.correo"
+          name="correo">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Contraseña</label>
+        <input
+          type="password"
+          class="form-input"
+          placeholder="Mínimo 6 caracteres"
+          [(ngModel)]="usuario.password"
+          name="password">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Rol del sistema</label>
+        <select class="form-input" [(ngModel)]="usuario.rol" name="rol">
+          <option value="Administrador">Administrador</option>
+          <option value="Bibliotecario">Bibliotecario</option>
+          <option value="Lector">Lector</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Teléfono</label>
+        <input
+          type="text"
+          class="form-input"
+          placeholder="Número de contacto"
+          [(ngModel)]="usuario.telefono"
+          name="telefono">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Dirección</label>
+        <input
+          type="text"
+          class="form-input"
+          placeholder="Domicilio actual"
+          [(ngModel)]="usuario.direccion"
+          name="direccion">
+      </div>
+
+      <div class="actions-container">
+        <button type="submit" class="btn-modern">
+          Guardar Usuario
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
 </div>
