@@ -131,3 +131,26 @@
   margin-top: 0.4rem;
   font-weight: 500;
 }
+
+/* Select con el mismo estilo de los inputs */
+select.form-input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  padding-right: 2.8rem;
+
+  background-image:
+    linear-gradient(45deg, transparent 50%, #40405C 50%),
+    linear-gradient(135deg, #40405C 50%, transparent 50%);
+  background-position:
+    calc(100% - 20px) calc(50% - 3px),
+    calc(100% - 14px) calc(50% - 3px);
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+}
+
+select.form-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(64,64,92,.08);
+}

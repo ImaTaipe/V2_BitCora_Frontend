@@ -1,0 +1,43 @@
+<div class="perfil-container">
+
+  <div class="card perfil-card">
+
+    <div class="perfil-header">
+      <h2 class="perfil-title">
+        Nueva Categoría
+      </h2>
+    </div>
+
+    <form (ngSubmit)="guardar()">
+
+      <div class="form-group">
+
+        <label class="form-label">
+          Nombre
+        </label>
+
+        <input
+          type="text"
+          class="form-input"
+          [(ngModel)]="nombre"
+          name="nombre">
+
+      </div>
+
+      <div class="actions-container">
+
+        <button
+          type="submit"
+          class="btn-modern">
+
+          Guardar
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

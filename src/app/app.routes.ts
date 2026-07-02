@@ -20,6 +20,10 @@ import { ListaResenas } from './features/resenas/lista-resenas/lista-resenas';
 import { bibliotecarioGuard } from './core/guards/bibliotecario-guard';
 import { Register } from './features/auth/register/register';
 import { Perfil } from './features/usuarios/perfil/perfil';
+import { EditarCategoria } from './features/categorias/editar-categoria/editar-categoria';
+import { NuevaCategoria } from './features/categorias/nueva-categoria/nueva-categoria';
+import { ListadoCategorias } from './features/categorias/listado-categorias/listado-categorias';
+
 
 
 
@@ -122,6 +126,23 @@ export const routes: Routes = [
   path: 'perfil',
   component: Perfil,
   canActivate: [authGuard]
+},
+{
+  path: 'categorias',
+  component: ListadoCategorias,
+  canActivate: [authGuard, adminGuard]
+},
+
+{
+  path: 'categorias/nueva',
+  component: NuevaCategoria,
+  canActivate: [authGuard, adminGuard]
+},
+
+{
+  path: 'categorias/editar/:id',
+  component: EditarCategoria,
+  canActivate: [authGuard, adminGuard]
 },
   {
     path: '**',

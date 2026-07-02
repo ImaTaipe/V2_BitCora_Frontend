@@ -1,8 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LibrosService } from '../../../core/services/libros';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Categorias } from '../../../core/services/categorias';
 
 @Component({
   selector: 'app-editar-libro',
@@ -16,41 +17,49 @@ export class EditarLibro implements OnInit {
   imagen: File | null = null;
   imagenPreview: string | null = null;
   id!: number;
+  categorias = signal<any[]>([]);
 
   constructor(
     private route: ActivatedRoute,
     private librosService: LibrosService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private categoriasService: Categorias,
   ) {}
 
   ngOnInit(): void {
+
+    this.categoriasService
+      .getAll()
+      .subscribe(data => {
+        this.categorias.set(data);
+      });
+
     this.id = Number(this.route.snapshot.paramMap.get('id'));
 
     this.librosService.getLibro(this.id).subscribe({
       next: (data) => {
         this.libro = data;
-        this.cdr.detectChanges(); 
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('La API falló al traer el libro:', err);
-        this.libro = { id: 0 }; 
+        this.libro = { id: 0 };
         this.cdr.detectChanges();
-      }
+      },
     });
   }
 
   onFileChange(event: any) {
     const file = event.target.files[0];
-    
+
     if (file) {
       this.imagen = file;
 
-      // 💡 Generar la vista previa en tiempo real
       const reader = new FileReader();
       reader.onload = () => {
-        this.imagenPreview = reader.result as string; // Guarda la imagen en formato base64
-        this.cdr.detectChanges(); // Forzamos a Angular a redibujar la imagen preview
+        this.imagenPreview = reader.result as string;
+        this.cdr.detectChanges();
       };
       reader.readAsDataURL(file);
     }
@@ -58,28 +67,21 @@ export class EditarLibro implements OnInit {
 
   guardar() {
 
-  const payload = {
-    ...this.libro,
-    imagen: this.imagen
-  };
+    const payload = {
+      ...this.libro,
+      imagen: this.imagen
+    };
 
-  this.librosService
-    .editarLibro(
-      this.id,
-      payload
-    )
-    .subscribe({
-      next: () => {
-        alert(
-          'Libro actualizado con éxito'
-        );
-        this.router.navigate(
-          ['/libros']
-        );
-      },
-      error: (err) => {
-        console.error(err);
-      }
-    });
-}
+    this.librosService
+      .editarLibro(this.id, payload)
+      .subscribe({
+        next: () => {
+          alert('Libro actualizado con éxito');
+          this.router.navigate(['/libros']);
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      });
+  }
 }

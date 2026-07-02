@@ -16,6 +16,10 @@
       @if (auth.esAdministrador() || auth.esBibliotecario()) {
         <a class="bib-link" routerLink="/resenas">Reseñas</a>
       }
+      @if (auth.esAdministrador()) {
+        <a
+          class="bib-link" routerLink="/categorias">Categorías</a>
+      }
     </div>
   </div>
   <div class="bib-nav-right">

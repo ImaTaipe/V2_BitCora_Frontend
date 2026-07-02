@@ -1,0 +1,70 @@
+<div class="container mt-4">
+
+  <h2>Categorías</h2>
+
+  <hr>
+
+  <button
+    class="btn btn-primary mb-3"
+    routerLink="/categorias/nueva">
+
+    + Nueva Categoría
+
+  </button>
+
+  <table class="table table-striped">
+
+    <thead>
+
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      @for(categoria of categorias(); track categoria.id){
+
+        <tr>
+
+          <td>{{ categoria.id }}</td>
+
+          <td>{{ categoria.nombre }}</td>
+
+          <td>
+            {{ categoria.estado ? 'Activo' : 'Inactivo' }}
+          </td>
+
+          <td>
+
+            <button
+              class="btn btn-warning btn-sm"
+              [routerLink]="['/categorias/editar', categoria.id]">
+
+              Editar
+
+            </button>
+
+            <button
+              class="btn btn-danger btn-sm ms-2"
+              (click)="eliminar(categoria.id)">
+
+              Eliminar
+
+            </button>
+
+          </td>
+
+        </tr>
+
+      }
+
+    </tbody>
+
+  </table>
+
+</div>

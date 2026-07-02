@@ -46,6 +46,7 @@ export class LibrosService {
   isbn: string;
   anio: number;
   stock: number;
+  categoriaId: number | null;
   estado: boolean;
   imagen: File | null;
 }) {
@@ -60,6 +61,14 @@ export class LibrosService {
   formData.append('Anio', data.anio.toString());
   formData.append('Stock', data.stock.toString());
   formData.append('Estado', String(data.estado));
+  if (data.categoriaId) {
+
+  formData.append(
+    'CategoriaId',
+    data.categoriaId.toString()
+  );
+
+}
 
   if (data.imagen) {
     formData.append('Imagen', data.imagen);
@@ -86,7 +95,7 @@ editarLibro(id: number, data: any) {
   formData.append('Anio', data.anio.toString());
   formData.append('Stock', data.stock.toString());
   formData.append('Estado', String(data.estado));
-
+  formData.append('CategoriaId',data.categoriaId);
   if (data.imagen) {
     formData.append('Imagen', data.imagen);
   }

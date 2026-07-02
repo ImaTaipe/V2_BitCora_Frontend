@@ -16,9 +16,15 @@ export interface Libro {
 
   stock: number;
 
+  categoriaId?: number;
+
+  categoria?: string;
+
   urlImagen?: string;
-  
+
   estado: boolean;
+
   promedioEstrellas: number;
+
   cantidadResenas: number;
 }

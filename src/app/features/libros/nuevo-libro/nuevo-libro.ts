@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectorRef } from '@angular/core'; // 💡 Importado ChangeDetectorRef
+import { Component, ChangeDetectorRef, signal, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LibrosService } from '../../../core/services/libros';
 import { RouterLink, Router } from '@angular/router';
+import { Categorias } from '../../../core/services/categorias';
+
 
 @Component({
   selector: 'app-nuevo-libro',
@@ -10,7 +12,7 @@ import { RouterLink, Router } from '@angular/router';
   templateUrl: './nuevo-libro.html',
   styleUrl: './nuevo-libro.css',
 })
-export class NuevoLibro {
+export class NuevoLibro implements OnInit {
 
   libro = {
     titulo: '',
@@ -20,29 +22,39 @@ export class NuevoLibro {
     isbn: '',
     anio: 0,
     stock: 0,
+    categoriaId: null,
     estado: true
   };
+  categorias = signal<any[]>([]);
 
   imagen: File | null = null;
-  imagenPreview: string | null = null; // Variable para almacenar el base64 de la imagen
+  imagenPreview: string | null = null;
 
   constructor(
     private librosService: LibrosService,
+    private categoriasService: Categorias,
     private router: Router,
-    private cdr: ChangeDetectorRef // 💡 Inyectado en el constructor
+    private cdr: ChangeDetectorRef
   ) {}
+
+  ngOnInit(): void {
+    this.categoriasService
+      .getAll()
+      .subscribe(data => {
+        this.categorias.set(data);
+      });
+  }
 
   onFileChange(event: any) {
     const file = event.target.files[0];
-    
+
     if (file) {
       this.imagen = file;
 
-      // 💡 Generar la vista previa en tiempo real
       const reader = new FileReader();
       reader.onload = () => {
-        this.imagenPreview = reader.result as string; 
-        this.cdr.detectChanges(); // ✨ Forzamos a Angular a redibujar el DOM con la nueva previsualización
+        this.imagenPreview = reader.result as string;
+        this.cdr.detectChanges();
       };
       reader.readAsDataURL(file);
     } else {
