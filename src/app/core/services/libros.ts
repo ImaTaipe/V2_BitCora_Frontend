@@ -88,17 +88,24 @@ editarLibro(id: number, data: any) {
   const formData = new FormData();
 
   formData.append('Titulo', data.titulo);
-  formData.append('Autor', data.autor);
-  formData.append('Editorial', data.editorial);
-  formData.append('Sinopsis', data.sinopsis);
-  formData.append('ISBN', data.isbn);
-  formData.append('Anio', data.anio.toString());
-  formData.append('Stock', data.stock.toString());
-  formData.append('Estado', String(data.estado));
-  formData.append('CategoriaId',data.categoriaId);
-  if (data.imagen) {
-    formData.append('Imagen', data.imagen);
-  }
+formData.append('Autor', data.autor);
+formData.append('Editorial', data.editorial);
+formData.append('Sinopsis', data.sinopsis);
+formData.append('ISBN', data.isbn);
+formData.append('Anio', data.anio.toString());
+formData.append('Stock', data.stock.toString());
+formData.append('Estado', String(data.estado));
+
+formData.append(
+  'CategoriaId',
+  data.categoriaId == null
+    ? ''
+    : data.categoriaId.toString()
+);
+
+if (data.imagen) {
+  formData.append('Imagen', data.imagen);
+}
 
   return this.http.put(
     `${this.apiUrl}/${id}`,

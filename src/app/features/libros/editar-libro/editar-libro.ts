@@ -40,10 +40,17 @@ export class EditarLibro implements OnInit {
     this.librosService.getLibro(this.id).subscribe({
       next: (data) => {
         this.libro = data;
+        console.log(this.libro);
         this.cdr.detectChanges();
       },
       error: (err) => {
-        console.error('La API falló al traer el libro:', err);
+        console.log(
+    JSON.stringify(
+      err.error,
+      null,
+      2
+    )
+  );
         this.libro = { id: 0 };
         this.cdr.detectChanges();
       },
@@ -71,6 +78,7 @@ export class EditarLibro implements OnInit {
       ...this.libro,
       imagen: this.imagen
     };
+    console.log(payload);
 
     this.librosService
       .editarLibro(this.id, payload)

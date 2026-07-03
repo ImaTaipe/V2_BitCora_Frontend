@@ -1,64 +1,78 @@
 <div class="perfil-container">
 
-  <div class="card perfil-card">
+  @if (categoria && categoria.id) {
 
-    <div class="perfil-header">
-      <h2 class="perfil-title">
-        Editar Categoría
-      </h2>
-    </div>
+    <div class="card perfil-card">
 
-    <form (ngSubmit)="guardar()">
-
-      <div class="form-group">
-        <label class="form-label">Nombre</label>
-
-        <input
-          type="text"
-          class="form-input"
-          [(ngModel)]="categoria.nombre"
-          name="nombre">
-
-          @if(errorNombre){
-  <small class="error-text">
-    {{ errorNombre }}
-  </small>
-}
+      <div class="perfil-header">
+        <h2 class="perfil-title">
+          Editar Categoría
+        </h2>
       </div>
 
-      <div class="form-group checkbox-group">
-        <label class="checkbox-label">
+      <form (ngSubmit)="guardar()">
+
+        <div class="form-group">
+          <label class="form-label">Nombre</label>
 
           <input
-            type="checkbox"
-            [(ngModel)]="categoria.estado"
-            name="estado">
+            type="text"
+            class="form-input"
+            [(ngModel)]="categoria.nombre"
+            name="nombre">
 
-          <span>Activa</span>
+          @if (errorNombre) {
+            <small class="error-text">
+              {{ errorNombre }}
+            </small>
+          }
+        </div>
 
-        </label>
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+
+            <input
+              type="checkbox"
+              [(ngModel)]="categoria.estado"
+              name="estado">
+
+            <span>Activa</span>
+
+          </label>
+        </div>
+
+        <div class="actions-container">
+          <button
+            type="button"
+            class="btn-modern btn-cancelar"
+            (click)="cancelar()">
+
+            Cancelar
+          </button>
+
+          <button
+            type="submit"
+            class="btn-modern btn-guardar-verde">
+
+            Guardar
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+
+  } @else {
+
+    <div class="perfil-card">
+
+      <div style="text-align:center;">
+        <div class="spinner-border"></div>
+        <p>Cargando categoría...</p>
       </div>
 
-      <div class="actions-container">
-        <button
-    type="button"
-    class="btn-modern btn-cancelar"
-    (click)="cancelar()">
+    </div>
 
-    Cancelar
-  </button>
-
-  <button
-    type="submit"
-    class="btn-modern btn-guardar-verde">
-
-    Guardar
-  </button>
-
-      </div>
-
-    </form>
-
-  </div>
+  }
 
 </div>

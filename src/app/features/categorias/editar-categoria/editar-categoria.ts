@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 
 import { Categorias } from '../../../core/services/categorias';
+
 
 @Component({
   selector: 'app-editar-categoria',
@@ -14,17 +15,16 @@ export class EditarCategoria implements OnInit {
 
   id = 0;
   errorNombre = '';
+  
 
-  categoria: any = {
-    nombre: '',
-    estado: true
-  };
+  categoria: any = null;
 
   constructor(
-    private route: ActivatedRoute,
-    private categoriasService: Categorias,
-    private router: Router
-  ) {}
+  private route: ActivatedRoute,
+  private categoriasService: Categorias,
+  private router: Router,
+  private cdr: ChangeDetectorRef
+) {}
 
   ngOnInit(): void {
 
@@ -33,10 +33,16 @@ export class EditarCategoria implements OnInit {
     );
 
     this.categoriasService
-      .getById(this.id)
-      .subscribe(data => {
-        this.categoria = data;
-      });
+  .getById(this.id)
+  .subscribe(data => {
+
+    console.log('Categoria recibida:', data);
+
+    this.categoria = data;
+
+    this.cdr.detectChanges();
+
+  });
   }
 
   guardar() {

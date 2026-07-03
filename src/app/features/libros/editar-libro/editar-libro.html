@@ -152,17 +152,21 @@
           <label class="form-label">Categoría</label>
 
           <select
-            class="form-input form-select"
-            [(ngModel)]="libro.categoriaId"
-            name="categoriaId">
+  class="form-input form-select"
+  [(ngModel)]="libro.categoriaId"
+  name="categoriaId">
 
-            @for (categoria of categorias(); track categoria.id) {
-              <option [ngValue]="categoria.id">
-                {{ categoria.nombre }}
-              </option>
-            }
+  <option [ngValue]="null">
+    Sin categoría
+  </option>
 
-          </select>
+  @for (categoria of categorias(); track categoria.id) {
+    <option [ngValue]="categoria.id">
+      {{ categoria.nombre }}
+    </option>
+  }
+
+</select>
         </div>
 
         <!-- Imagen -->
